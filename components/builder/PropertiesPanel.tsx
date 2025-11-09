@@ -269,11 +269,7 @@ ${mockResponse.tool_calls
     }
 
     // LLM node
-    if (selectedNode.id === 'llm') {
-      const [model, setModel] = useState(currentMCP?.configuration.model || 'gpt-3.5-turbo');
-      const [temperature, setTemperature] = useState(currentMCP?.configuration.temperature || 0.7);
-      const [maxTokens, setMaxTokens] = useState(currentMCP?.configuration.maxTokens || 2000);
-
+    if (selectedNode.id === 'llm' || selectedNode.id.startsWith('llm-')) {
       return (
         <Card>
           <CardHeader>
