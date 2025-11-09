@@ -382,6 +382,7 @@ ${mockResponse.tool_calls
           temperature,
           maxTokens,
           systemPrompt,
+          availableToolIds,
         });
         toast({
           title: 'LLM Updated',
