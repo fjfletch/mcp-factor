@@ -16,11 +16,15 @@ import APIConfigModal from '@/components/modals/APIConfigModal';
 import ToolConfigModal from '@/components/modals/ToolConfigModal';
 
 export default function PropertiesPanel() {
-  const { currentMCP, selectedNode } = useMCPStore();
+  const { currentMCP, selectedNode, updateMCP, removeAPI, removeTool, updateAPI, updateTool, selectNode } = useMCPStore();
   const { toast } = useToast();
   const [testQuery, setTestQuery] = useState('');
   const [testResult, setTestResult] = useState('');
   const [isTestRunning, setIsTestRunning] = useState(false);
+  const [isEditingAPI, setIsEditingAPI] = useState(false);
+  const [isEditingTool, setIsEditingTool] = useState(false);
+  const [editingAPIConfig, setEditingAPIConfig] = useState<any>(null);
+  const [editingToolConfig, setEditingToolConfig] = useState<any>(null);
 
   const runTest = async () => {
     if (!testQuery.trim()) return;
