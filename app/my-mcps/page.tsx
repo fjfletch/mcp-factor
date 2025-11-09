@@ -122,8 +122,8 @@ export default function MyMCPs() {
         {/* MCP List */}
         {filteredMCPs.length === 0 ? (
           <div className="text-center py-20">
-            <h2 className="text-xl font-semibold mb-2">No MCPs found</h2>
-            <p className="text-muted-foreground mb-4">
+            <h2 className="text-xl font-semibold mb-2 text-white">No MCPs found</h2>
+            <p className="text-white/80 mb-4">
               {searchQuery ? "Try a different search term" : "Create your first MCP to get started"}
             </p>
             {!searchQuery && (
