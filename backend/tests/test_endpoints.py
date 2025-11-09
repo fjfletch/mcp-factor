@@ -5,7 +5,15 @@ from unittest.mock import AsyncMock, patch, MagicMock
 from fastapi.testclient import TestClient
 
 from dynamic_tools.api.app import app
-from dynamic_tools.models.api_requests import PromptRequest, PromptResponse, MCPPromptRequest, ExecuteRequest, ExecuteResponse
+from dynamic_tools.models.api_requests import (
+    PromptRequest,
+    PromptResponse,
+    MCPPromptRequest,
+    ExecuteRequest,
+    ExecuteResponse,
+    GenerateToolConfigRequest,
+    GenerateToolConfigResponse
+)
 from dynamic_tools.models.http_spec import HTTPRequestSpec, HTTPResponseSpec
 
 
@@ -25,6 +33,15 @@ def mock_http_client():
         client_instance = AsyncMock()
         mock.return_value = client_instance
         yield client_instance
+
+
+@pytest.fixture
+def mock_tool_generator():
+    """Mock ToolConfigGenerator for testing."""
+    with patch('dynamic_tools.api.endpoints.ToolConfigGenerator') as mock:
+        generator_instance = AsyncMock()
+        mock.return_value = generator_instance
+        yield generator_instance
 
 
 def test_prompt_endpoint_success(client, mock_prompt_service):
@@ -461,4 +478,199 @@ def test_execute_endpoint_with_post_request(client, mock_http_client):
     assert data["data"]["status_code"] == 201
     assert data["data"]["body"]["id"] == 456
     assert data["data"]["body"]["created"] is True
+
+
+# Tests for /generate-tool-config endpoint
+
+def test_generate_tool_config_endpoint_success(client, mock_tool_generator):
+    """Test /generate-tool-config endpoint with valid request.
+    
+    Given: Valid GenerateToolConfigRequest
+    When: Posting to /generate-tool-config
+    Then: Should return GenerateToolConfigResponse with tool_config
+    """
+    # Mock the generator response
+    mock_tool_config = {
+        "name": "get_weather",
+        "description": "Get weather information for a city",
+        "version": 1,
+        "enabled": True,
+        "api": {
+            "base_url": "https://api.openweathermap.org",
+            "path": "/data/2.5/weather",
+            "method": "GET",
+            "headers": {},
+            "params": {},
+            "auth": {"method": "none"},
+            "timeout": 30.0
+        },
+        "input_schema": {
+            "type": "object",
+            "properties": {"city": {"type": "string"}},
+            "required": ["city"]
+        },
+        "output_schema": {
+            "type": "object",
+            "properties": {"temperature": {"type": "number"}},
+            "required": ["temperature"]
+        },
+        "mapping": {
+            "input_to_params": {"city": "q"},
+            "input_to_body": {},
+            "response_to_output": {"temperature": "main.temp"},
+            "response_path": None
+        },
+        "tags": [],
+        "metadata": {}
+    }
+    
+    mock_tool_generator.generate_tool_config.return_value = mock_tool_config
+    
+    request_data = {
+        "tool_name": "get_weather",
+        "tool_description": "Get weather information for a city",
+        "api_docs": "GET https://api.openweathermap.org/data/2.5/weather?q={city}&appid={key}"
+    }
+    
+    response = client.post("/generate-tool-config", json=request_data)
+    
+    assert response.status_code == 200
+    data = response.json()
+    assert data["status"] == "success"
+    assert data["tool_config"] is not None
+    assert data["tool_config"]["name"] == "get_weather"
+    assert data["error"] is None
+
+
+def test_generate_tool_config_endpoint_with_schema_descriptions(client, mock_tool_generator):
+    """Test /generate-tool-config endpoint with schema descriptions.
+    
+    Given: GenerateToolConfigRequest with optional descriptions
+    When: Posting to /generate-tool-config
+    Then: Should pass descriptions to generator and return config
+    """
+    mock_tool_config = {
+        "name": "test_tool",
+        "description": "Test tool",
+        "version": 1,
+        "enabled": True,
+        "api": {
+            "base_url": "https://api.example.com",
+            "path": "",
+            "method": "GET",
+            "headers": {},
+            "params": {},
+            "auth": {"method": "none"},
+            "timeout": 30.0
+        },
+        "input_schema": {"type": "object", "properties": {}, "required": []},
+        "output_schema": {"type": "object", "properties": {}, "required": []},
+        "mapping": {
+            "input_to_params": {},
+            "input_to_body": {},
+            "response_to_output": {},
+            "response_path": None
+        },
+        "tags": [],
+        "metadata": {}
+    }
+    
+    mock_tool_generator.generate_tool_config.return_value = mock_tool_config
+    
+    request_data = {
+        "tool_name": "test_tool",
+        "tool_description": "Test tool description",
+        "api_docs": "Test API docs",
+        "input_schema_description": "city as string",
+        "output_schema_description": "temperature and humidity"
+    }
+    
+    response = client.post("/generate-tool-config", json=request_data)
+    
+    assert response.status_code == 200
+    data = response.json()
+    assert data["status"] == "success"
+    assert data["tool_config"]["name"] == "test_tool"
+
+
+def test_generate_tool_config_endpoint_missing_required_field(client):
+    """Test /generate-tool-config endpoint with missing required field.
+    
+    Given: GenerateToolConfigRequest without tool_name
+    When: Posting to /generate-tool-config
+    Then: Should return 422 validation error
+    """
+    request_data = {
+        "tool_description": "Test tool",
+        "api_docs": "Test docs"
+    }
+    
+    response = client.post("/generate-tool-config", json=request_data)
+    
+    assert response.status_code == 422
+
+
+def test_generate_tool_config_endpoint_invalid_description(client):
+    """Test /generate-tool-config endpoint with invalid description.
+    
+    Given: GenerateToolConfigRequest with too short description
+    When: Posting to /generate-tool-config
+    Then: Should return 422 validation error
+    """
+    request_data = {
+        "tool_name": "test",
+        "tool_description": "Short",  # Too short (min 10 chars)
+        "api_docs": "Test docs"
+    }
+    
+    response = client.post("/generate-tool-config", json=request_data)
+    
+    assert response.status_code == 422
+
+
+def test_generate_tool_config_endpoint_generator_failure(client, mock_tool_generator):
+    """Test /generate-tool-config endpoint when generator fails.
+    
+    Given: ToolConfigGenerator raises exception
+    When: Posting to /generate-tool-config
+    Then: Should return GenerateToolConfigResponse with error status
+    """
+    mock_tool_generator.generate_tool_config.side_effect = Exception("LLM API failure")
+    
+    request_data = {
+        "tool_name": "test_tool",
+        "tool_description": "Test tool description",
+        "api_docs": "Test API documentation"
+    }
+    
+    response = client.post("/generate-tool-config", json=request_data)
+    
+    assert response.status_code == 200
+    data = response.json()
+    assert data["status"] == "error"
+    assert data["tool_config"] is None
+    assert "Failed to generate tool config" in data["error"]
+
+
+def test_generate_tool_config_endpoint_in_openapi(client):
+    """Test that /generate-tool-config endpoint is in OpenAPI schema.
+    
+    Given: FastAPI application
+    When: Getting /openapi.json
+    Then: Should include /generate-tool-config endpoint
+    """
+    response = client.get("/openapi.json")
+    
+    assert response.status_code == 200
+    openapi = response.json()
+    
+    # Check that endpoint exists in paths
+    assert "/generate-tool-config" in openapi["paths"]
+    
+    # Check that it has a POST method
+    assert "post" in openapi["paths"]["/generate-tool-config"]
+    
+    # Check that it has proper tags
+    post_op = openapi["paths"]["/generate-tool-config"]["post"]
+    assert "Tools" in post_op.get("tags", []) or "LLM" in post_op.get("tags", [])
 

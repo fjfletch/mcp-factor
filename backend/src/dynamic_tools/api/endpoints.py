@@ -8,11 +8,14 @@ from ..models.api_requests import (
     PromptResponse,
     MCPPromptRequest,
     ExecuteRequest,
-    ExecuteResponse
+    ExecuteResponse,
+    GenerateToolConfigRequest,
+    GenerateToolConfigResponse
 )
 from ..models.http_spec import HTTPRequestSpec
 from ..services.prompt_service import PromptService
 from ..services.http_client import HTTPClientService
+from ..services.tool_generator import ToolConfigGenerator
 from ..config.settings import Settings, get_settings
 
 # Create API router
@@ -221,5 +224,76 @@ async def prompt_execute_endpoint(
         return ExecuteResponse(
             status="error",
             error=str(e)
+        )
+
+
+@router.post(
+    "/generate-tool-config",
+    response_model=GenerateToolConfigResponse,
+    summary="Generate Tool Config",
+    description="Auto-generate a ToolConfig from natural language API description",
+    tags=["Tools", "LLM"],
+)
+async def generate_tool_config_endpoint(
+    request: GenerateToolConfigRequest,
+    settings: Settings = Depends(get_settings)
+) -> GenerateToolConfigResponse:
+    """Generate a complete ToolConfig from API description.
+    
+    This endpoint uses LLM prompting to automatically generate a valid ToolConfig
+    from a natural language description of an API. The generated config can be
+    immediately used to register a new tool.
+    
+    Process:
+    1. Generate HTTPRequestSpec from API documentation via /prompt-mcp
+    2. Extract ApiConfig from the HTTPRequestSpec
+    3. Generate input schema from description
+    4. Generate output schema from description
+    5. Generate field mappings between input/output and API parameters
+    6. Return complete ToolConfig
+    
+    Args:
+        request: GenerateToolConfigRequest with tool metadata and API docs
+        settings: Application settings with API keys
+        
+    Returns:
+        GenerateToolConfigResponse with generated ToolConfig or error
+    """
+    try:
+        logger.info(f"Generating tool config for: {request.tool_name}")
+        logger.debug(f"Tool description: {request.tool_description[:100]}...")
+        
+        # Initialize the generator
+        generator = ToolConfigGenerator(
+            api_key=settings.openai_api_key,
+            max_retries=settings.llm_max_retries
+        )
+        
+        # Generate the tool config
+        tool_config = await generator.generate_tool_config(
+            tool_name=request.tool_name,
+            tool_description=request.tool_description,
+            api_docs=request.api_docs,
+            input_schema_description=request.input_schema_description,
+            output_schema_description=request.output_schema_description
+        )
+        
+        logger.info(f"✅ Successfully generated tool config: {request.tool_name}")
+        
+        # Return success response
+        return GenerateToolConfigResponse(
+            status="success",
+            tool_config=tool_config,
+            error=None
+        )
+        
+    except Exception as e:
+        logger.error(f"Failed to generate tool config: {e}")
+        
+        # Return error response
+        return GenerateToolConfigResponse(
+            status="error",
+            tool_config=None,
+            error=f"Failed to generate tool config: {str(e)}"
         )
 

@@ -198,3 +198,133 @@ class ExecuteResponse(BaseModel):
         }
     }
 
+
+class GenerateToolConfigRequest(BaseModel):
+    """Model for tool config generation requests.
+    
+    This model represents a request to automatically generate a ToolConfig
+    from a natural language description and API documentation.
+    
+    Attributes:
+        tool_name: Unique name for the tool
+        tool_description: Human-readable description of what the tool does
+        api_docs: API documentation or endpoint information
+        input_schema_description: Optional description of expected input fields
+        output_schema_description: Optional description of expected output fields
+    """
+    
+    tool_name: str = Field(
+        ...,
+        description="Unique name for the tool (e.g., get_stock_price)",
+        min_length=1,
+        max_length=100
+    )
+    tool_description: str = Field(
+        ...,
+        description="What the tool does and how to use it",
+        min_length=10,
+        max_length=500
+    )
+    api_docs: str = Field(
+        ...,
+        description="API documentation, endpoint, or technical specification",
+        min_length=10
+    )
+    input_schema_description: Optional[str] = Field(
+        default=None,
+        description="Optional guidance for input schema generation (e.g., 'symbol as string, time_period as integer')",
+        max_length=500
+    )
+    output_schema_description: Optional[str] = Field(
+        default=None,
+        description="Optional guidance for output schema generation (e.g., 'price as number, currency as string')",
+        max_length=500
+    )
+    
+    model_config = {
+        "json_schema_extra": {
+            "examples": [
+                {
+                    "tool_name": "get_weather",
+                    "tool_description": "Get current weather information for a city",
+                    "api_docs": "GET https://api.openweathermap.org/data/2.5/weather?q={city}&appid={key}",
+                    "input_schema_description": "city as string parameter",
+                    "output_schema_description": "temperature, humidity, conditions as strings"
+                }
+            ]
+        }
+    }
+
+
+class GenerateToolConfigResponse(BaseModel):
+    """Model for tool config generation response.
+    
+    This model represents the response from the tool config generation endpoint,
+    containing the generated ToolConfig or an error message.
+    
+    Attributes:
+        status: Generation status ('success' or 'error')
+        tool_config: The generated ToolConfig as a dictionary (present on success)
+        error: Error message if generation failed (present on error)
+    """
+    
+    status: Literal["success", "error"] = Field(
+        ...,
+        description="Whether config generation succeeded or failed"
+    )
+    tool_config: Optional[dict] = Field(
+        default=None,
+        description="Generated ToolConfig as a dictionary (present on success)"
+    )
+    error: Optional[str] = Field(
+        default=None,
+        description="Error message describing what went wrong (present on error)"
+    )
+    
+    model_config = {
+        "json_schema_extra": {
+            "examples": [
+                {
+                    "status": "success",
+                    "tool_config": {
+                        "name": "get_weather",
+                        "description": "Get current weather information",
+                        "version": 1,
+                        "enabled": True,
+                        "api": {
+                            "base_url": "https://api.openweathermap.org",
+                            "path": "/data/2.5/weather",
+                            "method": "GET",
+                            "headers": {},
+                            "params": {},
+                            "auth": {"method": "none"},
+                            "timeout": 30.0
+                        },
+                        "input_schema": {
+                            "type": "object",
+                            "properties": {"city": {"type": "string"}},
+                            "required": ["city"]
+                        },
+                        "output_schema": {
+                            "type": "object",
+                            "properties": {"temperature": {"type": "number"}},
+                            "required": ["temperature"]
+                        },
+                        "mapping": {
+                            "input_to_params": {"city": "q"},
+                            "input_to_body": {},
+                            "response_to_output": {"temperature": "main.temp"},
+                            "response_path": None
+                        },
+                        "tags": [],
+                        "metadata": {}
+                    }
+                },
+                {
+                    "status": "error",
+                    "error": "Failed to generate config: Invalid API documentation provided"
+                }
+            ]
+        }
+    }
+
