@@ -48,22 +48,26 @@ export default function Home() {
       <Navigation />
 
       {/* Hero Section */}
-      <section className="py-20 px-4">
-        <div className="container mx-auto text-center">
-          <h1 className="text-5xl md:text-6xl font-bold mb-6">
+      <section className="py-24 px-4">
+        <div className="container mx-auto max-w-5xl text-center">
+          <h1 className="text-5xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-primary via-secondary to-accent bg-clip-text text-transparent">
             Connect Any API to Any LLM
           </h1>
-          <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
-            Build powerful AI integrations with our visual, no-code platform.
-            Connect your favorite APIs to GPT-4, Claude, and more.
+          <p className="text-xl text-muted-foreground mb-8 max-w-3xl mx-auto">
+            Build powerful AI integrations visually. No code required. The Model Context Protocol Platform 
+            makes it easy to expose APIs as tools that LLMs can use.
           </p>
-          <div className="flex gap-4 justify-center">
-            <Button asChild size="lg">
-              <Link href="/builder/new">Create New MCP</Link>
-            </Button>
-            <Button asChild variant="outline" size="lg">
-              <Link href="/marketplace">Browse Marketplace</Link>
-            </Button>
+          <div className="flex gap-4 justify-center flex-wrap">
+            <Link href="/builder/new">
+              <Button size="lg" className="text-base px-8">
+                Create New MCP
+              </Button>
+            </Link>
+            <Link href="/marketplace">
+              <Button size="lg" variant="outline" className="text-base px-8">
+                Browse Marketplace
+              </Button>
+            </Link>
           </div>
         </div>
       </section>
