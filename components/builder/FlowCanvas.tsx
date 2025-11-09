@@ -343,41 +343,50 @@ export default function FlowCanvas() {
 
   if (!currentMCP) {
     return (
-      <div className="flex items-center justify-center h-full text-muted-foreground">
-        <p>Create an MCP to see the flow diagram</p>
+      <div className="flex h-full">
+        <BlocksPalette />
+        <div className="flex-1 flex items-center justify-center text-muted-foreground">
+          <p>Create an MCP to see the flow diagram</p>
+        </div>
       </div>
     );
   }
 
   return (
-    <div className="w-full h-full">
-      <ReactFlow
-        nodes={nodes}
-        edges={edges}
-        onNodesChange={onNodesChange}
-        onEdgesChange={handleEdgesChange}
-        onNodeClick={handleNodeClick}
-        onConnect={onConnect}
-        fitView
-        deleteKeyCode="Delete"
-        multiSelectionKeyCode="Shift"
-      >
-        <Controls />
-        <MiniMap />
-        <Background variant={BackgroundVariant.Dots} />
-        <Panel position="top-left" className="bg-background/90 p-3 rounded-lg border shadow-lg">
-          <div className="text-sm">
-            <p className="font-semibold mb-2">💡 Interactive Flow Canvas</p>
-            <div className="text-xs text-muted-foreground space-y-1">
-              <p>• Click nodes to edit in Properties panel</p>
-              <p>• Drag nodes to reposition</p>
-              <p>• Click and drag between nodes to connect</p>
-              <p>• Select connections and press Delete to remove</p>
-              <p>• Add APIs & Tools in sidebar</p>
+    <div className="flex h-full">
+      <BlocksPalette />
+      <div className="flex-1" ref={reactFlowWrapper}>
+        <ReactFlow
+          nodes={nodes}
+          edges={edges}
+          onNodesChange={onNodesChange}
+          onEdgesChange={handleEdgesChange}
+          onNodeClick={handleNodeClick}
+          onConnect={onConnect}
+          onInit={setReactFlowInstance}
+          onDrop={onDrop}
+          onDragOver={onDragOver}
+          fitView
+          deleteKeyCode="Delete"
+          multiSelectionKeyCode="Shift"
+        >
+          <Controls />
+          <MiniMap />
+          <Background variant={BackgroundVariant.Dots} />
+          <Panel position="top-right" className="bg-background/90 p-3 rounded-lg border shadow-lg">
+            <div className="text-sm max-w-xs">
+              <p className="font-semibold mb-2">💡 Interactive Canvas</p>
+              <div className="text-xs text-muted-foreground space-y-1">
+                <p>• <strong>Drag blocks</strong> from left palette to canvas</p>
+                <p>• <strong>Click nodes</strong> to edit in Properties panel</p>
+                <p>• <strong>Drag nodes</strong> to reposition</p>
+                <p>• <strong>Connect nodes</strong> by dragging between them</p>
+                <p>• <strong>Delete connections</strong> with Delete key</p>
+              </div>
             </div>
-          </div>
-        </Panel>
-      </ReactFlow>
+          </Panel>
+        </ReactFlow>
+      </div>
     </div>
   );
 }
