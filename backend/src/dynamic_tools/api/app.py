@@ -8,6 +8,7 @@ from loguru import logger
 
 from .endpoints import router
 from .database_endpoints import router as db_router
+from .proxy import router as proxy_router
 
 # Configure loguru
 logger.remove()  # Remove default handler
