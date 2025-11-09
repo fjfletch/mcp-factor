@@ -4,8 +4,10 @@ import { canConnect } from '@/lib/flowValidation';
 
 interface MCPStoreState {
   currentMCP: MCPIntegration | null;
-  nodes: FlowNode[];
-  edges: FlowEdge[];
+  nodes: FlowNode[]; // Legacy - for React Flow backward compatibility
+  edges: FlowEdge[]; // Legacy - for React Flow backward compatibility
+  flowNodes: FlowNode[]; // Manually created flow nodes
+  flowEdges: FlowEdge[]; // Manually created flow edges
   selectedNode: FlowNode | null;
   llmNodes: Record<string, any>; // Store individual LLM node configs
   setCurrentMCP: (mcp: MCPIntegration | null) => void;
@@ -21,6 +23,17 @@ interface MCPStoreState {
   selectNode: (node: FlowNode | null) => void;
   updateLLMNode: (nodeId: string, config: any) => void;
   getLLMNode: (nodeId: string) => any;
+  // New flow management actions
+  addFlowNode: (node: FlowNode) => void;
+  updateFlowNode: (nodeId: string, updates: Partial<FlowNode>) => void;
+  removeFlowNode: (nodeId: string) => void;
+  addFlowEdge: (edge: FlowEdge) => void;
+  removeFlowEdge: (edgeId: string) => void;
+  validateFlowConnection: (sourceId: string, targetId: string) => boolean;
+  getNodeById: (nodeId: string) => FlowNode | null;
+  getConnectedNodes: (nodeId: string) => { incoming: FlowNode[]; outgoing: FlowNode[] };
+  setFlowNodes: (nodes: FlowNode[]) => void;
+  setFlowEdges: (edges: FlowEdge[]) => void;
 }
 
 export const useMCPStore = create<MCPStoreState>((set, get) => ({
