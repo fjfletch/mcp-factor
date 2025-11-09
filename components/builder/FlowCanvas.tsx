@@ -456,6 +456,7 @@ export default function FlowCanvas() {
           onInit={setReactFlowInstance}
           onDrop={onDrop}
           onDragOver={onDragOver}
+          nodeTypes={nodeTypes}
           fitView
           deleteKeyCode="Delete"
           multiSelectionKeyCode="Shift"
