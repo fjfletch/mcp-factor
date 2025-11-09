@@ -66,7 +66,7 @@ export default function Marketplace() {
       <Navigation />
       
       <div className="container mx-auto px-4 py-8 max-w-7xl relative">
-        <h1 className="text-3xl font-bold mb-6">MCP Marketplace</h1>
+        <h1 className="text-3xl font-bold mb-6 text-white">MCP Marketplace</h1>
 
         {/* Search Bar */}
         <div className="mb-6">
