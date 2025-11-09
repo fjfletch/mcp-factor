@@ -241,6 +241,106 @@ export default function FlowCanvas() {
     };
   }, [handleKeyDown]);
 
+  const onDragOver = useCallback((event: React.DragEvent) => {
+    event.preventDefault();
+    event.dataTransfer.dropEffect = 'move';
+  }, []);
+
+  const onDrop = useCallback(
+    (event: React.DragEvent) => {
+      event.preventDefault();
+
+      const type = event.dataTransfer.getData('application/reactflow');
+      const blockDataStr = event.dataTransfer.getData('blockData');
+
+      if (!type || !reactFlowInstance) {
+        return;
+      }
+
+      const position = reactFlowInstance.screenToFlowPosition({
+        x: event.clientX,
+        y: event.clientY,
+      });
+
+      let blockData = {};
+      try {
+        blockData = JSON.parse(blockDataStr);
+      } catch (e) {
+        console.error('Error parsing block data:', e);
+      }
+
+      let newNode: Node | null = null;
+
+      if (type === 'api') {
+        const api = blockData as any;
+        newNode = {
+          id: `api-${api.id}`,
+          type: 'default',
+          position,
+          data: { label: `📡 ${api.name}\n${api.routes.length} routes`, apiId: api.id },
+          style: {
+            backgroundColor: '#fef3c7',
+            border: '2px solid #f59e0b',
+            borderRadius: '8px',
+            padding: '12px',
+            fontWeight: 500,
+            minWidth: '150px',
+          },
+          draggable: true,
+        };
+      } else if (type === 'tool') {
+        const tool = blockData as any;
+        newNode = {
+          id: `tool-${tool.id}`,
+          type: 'default',
+          position,
+          data: {
+            label: `🔧 ${tool.displayName}\n${tool.method} ${tool.endpoint}`,
+            toolId: tool.id,
+          },
+          style: {
+            backgroundColor: '#ddd6fe',
+            border: '2px solid #8b5cf6',
+            borderRadius: '8px',
+            padding: '12px',
+            fontWeight: 500,
+            minWidth: '160px',
+          },
+          draggable: true,
+        };
+      } else if (type === 'prompt') {
+        const prompt = blockData as any;
+        newNode = {
+          id: `prompt-${prompt.id}`,
+          type: 'default',
+          position,
+          data: {
+            label: `${prompt.type === 'system' ? '⚙️' : '💬'} ${prompt.type}\n${prompt.content.substring(0, 30)}...`,
+            promptId: prompt.id,
+          },
+          style: {
+            backgroundColor: '#dbeafe',
+            border: '2px solid #3b82f6',
+            borderRadius: '8px',
+            padding: '12px',
+            fontWeight: 500,
+            minWidth: '160px',
+          },
+          draggable: true,
+        };
+      }
+
+      if (newNode) {
+        setNodes((nds) => nds.concat(newNode as Node));
+        toast({
+          title: 'Block Added',
+          description: `${type.charAt(0).toUpperCase() + type.slice(1)} added to canvas`,
+        });
+      }
+    },
+    [reactFlowInstance, setNodes, toast]
+  );
+
   if (!currentMCP) {
     return (
       <div className="flex items-center justify-center h-full text-muted-foreground">
