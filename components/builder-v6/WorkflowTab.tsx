@@ -190,10 +190,23 @@ export namespace WorkflowTab {
       <div className="h-full overflow-y-auto p-6">
         {/* Header */}
         <div className="mb-6">
-          <h2 className="text-3xl font-bold mb-2">Workflow</h2>
-          <p className="text-muted-foreground">
-            Build your workflow step by step
-          </p>
+          <div className="flex items-center justify-between">
+            <div>
+              <h2 className="text-3xl font-bold mb-2">Workflow</h2>
+              <p className="text-muted-foreground">
+                Build your workflow step by step
+              </p>
+            </div>
+            {workflowSteps.length > 0 && (
+              <Button
+                onClick={() => setSelectedItem({ type: 'testing' })}
+                variant="outline"
+              >
+                <Plus className="h-4 w-4 mr-2" />
+                Test Workflow
+              </Button>
+            )}
+          </div>
         </div>
 
         {/* Workflow Steps */}
