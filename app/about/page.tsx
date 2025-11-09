@@ -181,7 +181,7 @@ Please note, these prices are higher than average for this route.`;
                   Response without MCP
                 </h3>
                 <div 
-                  className="backdrop-blur-sm bg-black/80 rounded-xl p-6 border border-white/10 font-mono text-sm text-green-400 min-h-[300px] overflow-auto"
+                  className="backdrop-blur-sm bg-black/80 rounded-xl p-6 border border-white/10 font-mono text-sm text-green-400 h-[400px] overflow-auto"
                   style={{ whiteSpace: 'pre-wrap', wordBreak: 'break-word' }}
                 >
                   {typedTextWithout}
@@ -195,7 +195,7 @@ Please note, these prices are higher than average for this route.`;
                   Response with MCP
                 </h3>
                 <div 
-                  className="backdrop-blur-sm bg-black/80 rounded-xl p-6 border border-white/10 font-mono text-sm text-green-400 min-h-[300px] overflow-auto"
+                  className="backdrop-blur-sm bg-black/80 rounded-xl p-6 border border-white/10 font-mono text-sm text-green-400 h-[400px] overflow-auto"
                   style={{ whiteSpace: 'pre-wrap', wordBreak: 'break-word' }}
                 >
                   {typedTextWith}
