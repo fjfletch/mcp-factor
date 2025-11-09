@@ -36,13 +36,13 @@ export default function ParticleBackgroundSimple({ scrollY }: { scrollY: number 
 
     // Initialize particles
     if (particlesRef.current.length === 0) {
-      for (let i = 0; i < 500; i++) {
+      for (let i = 0; i < 2000; i++) {
         particlesRef.current.push({
           x: Math.random() * canvas.width,
           y: Math.random() * canvas.height,
-          vx: (Math.random() - 0.5) * 0.5,
-          vy: (Math.random() - 0.5) * 0.5,
-          size: Math.random() * 3 + 1,
+          vx: (Math.random() - 0.5) * 0.3,
+          vy: (Math.random() - 0.5) * 0.3,
+          size: Math.random() * 2.5 + 0.5,
           colorIndex: Math.floor(Math.random() * COLORS.length),
         });
       }
