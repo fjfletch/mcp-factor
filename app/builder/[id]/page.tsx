@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import { useMCPStore } from '@/store/mcpStore';
 import { createNewMCP, loadMCPFromStorage, saveMCPToStorage } from '@/lib/mockStorage';
-import { Menu, Save, Play, Rocket, Loader2 } from 'lucide-react';
+import { Save, Play, Rocket, Loader2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { useToast } from '@/components/ui/use-toast';
