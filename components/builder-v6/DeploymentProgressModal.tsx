@@ -122,9 +122,9 @@ export function DeploymentProgressModal({
               <span className="text-muted-foreground">Overall Progress</span>
               <span className="font-medium">{Math.round(overallProgress)}%</span>
             </div>
-            <div className="h-2 bg-secondary rounded-full overflow-hidden">
+            <div className="h-2 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
               <div
-                className="h-full bg-primary transition-all duration-300"
+                className="h-full bg-blue-600 dark:bg-blue-500 transition-all duration-300"
                 style={{ width: `${overallProgress}%` }}
               />
             </div>
