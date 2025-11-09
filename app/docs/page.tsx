@@ -68,7 +68,7 @@ export default function Documentation() {
             <section id="intro">
               <h2 className="text-3xl font-bold mb-4">Introduction</h2>
               <p className="text-muted-foreground mb-6">
-                The Model Context Protocol (MCP) Platform allows you to connect any REST API to any LLM 
+                Piraeus allows you to connect any REST API to any LLM 
                 (GPT-4, Claude, etc.) through a visual, no-code interface. Build powerful AI integrations 
                 that let LLMs execute functions, retrieve data, and interact with external services.
               </p>
