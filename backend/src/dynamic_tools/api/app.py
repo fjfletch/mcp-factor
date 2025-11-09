@@ -33,6 +33,7 @@ app.add_middleware(
 # Include API endpoints
 app.include_router(router)
 app.include_router(db_router)
+app.include_router(proxy_router)
 
 
 @app.get("/health")
