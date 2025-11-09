@@ -158,7 +158,7 @@ export function DeploymentProgressModal({
                 </div>
                 {step.status === 'in-progress' && (
                   <div className="ml-8 h-1 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
-                    <div className="h-full bg-blue-600 dark:bg-blue-500 animate-pulse w-full" />
+                    <div className="h-full bg-teal-600 dark:bg-teal-500 animate-pulse w-full" />
                   </div>
                 )}
               </div>
