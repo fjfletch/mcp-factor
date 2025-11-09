@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
-import { Zap, Code, TestTube, Share2, ArrowDown } from "lucide-react";
+import { Zap, Code, TestTube, Share2, ArrowDown, Star } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -15,6 +15,7 @@ import { Badge } from "@/components/ui/badge";
 import { Navigation } from "@/components/Navigation";
 import { motion } from 'framer-motion';
 import dynamic from 'next/dynamic';
+import { mockMCPs } from "@/lib/mock-data";
 
 const ParticleBackground = dynamic(
   () => import('@/components/ParticleBackgroundFibonacci').then(mod => mod.ParticleBackground),
