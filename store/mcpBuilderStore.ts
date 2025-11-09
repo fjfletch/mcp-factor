@@ -658,8 +658,9 @@ export const useMCPBuilderStore = create<MCPBuilderStore>((set, get) => ({
       
       console.log('✅ Loaded all data from backend');
     } catch (error: any) {
-      console.error('❌ Error loading from backend:', error);
-      setError(error.message || 'Failed to load data');
+      console.warn('⚠️ Backend unavailable:', error);
+      setError(error.message || 'Backend unavailable');
+      // Don't throw - let the app continue with local/default data
     } finally {
       setLoading(false);
     }
