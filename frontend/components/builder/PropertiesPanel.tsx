@@ -147,7 +147,7 @@ ${mockResponse.tool_calls
       // Get tool ID from node data instead of parsing node ID
       const toolId = selectedNode.data?.toolId;
       const tool = currentMCP?.tools.find((t) => t.id === toolId);
-      if (!tool) {
+      if (!tool || !toolId) {
         return (
           <Card>
             <CardContent className="p-6 text-center text-muted-foreground">
