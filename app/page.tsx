@@ -239,7 +239,7 @@ export default function Home() {
           viewport={{ once: true }}
           className="container mx-auto max-w-4xl text-center"
         >
-          <div className="backdrop-blur-xl bg-white/35 border-2 border-white/50 rounded-3xl p-12 shadow-2xl">
+          <div className="backdrop-blur-xl bg-white/15 border-2 border-white/30 rounded-3xl p-12 shadow-2xl">
             <h2 className="text-5xl md:text-6xl font-bold mb-6" style={{ color: '#033F63' }}>
               Ready to Get Started?
             </h2>
