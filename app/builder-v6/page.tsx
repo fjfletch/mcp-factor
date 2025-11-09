@@ -24,11 +24,10 @@ export default function BuilderV6Page() {
   // Load data from backend on mount (with graceful fallback)
   useEffect(() => {
     const loadData = async () => {
-      // TEMPORARY: Backend loading disabled due to HTTPS/HTTP mixed content
-      // The preview URL uses HTTPS but backend is HTTP, which browsers block
-      // Enable this once backend has HTTPS or when accessing via localhost
+      // Backend loading with AWS backend
+      // Note: May have Mixed Content issues if preview uses HTTPS
       
-      const ENABLE_BACKEND = false; // Set to true when backend has HTTPS
+      const ENABLE_BACKEND = true; // Enabled to test AWS backend
       
       if (ENABLE_BACKEND) {
         try {
