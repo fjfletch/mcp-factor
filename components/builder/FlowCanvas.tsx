@@ -80,12 +80,19 @@ export default function FlowCanvas() {
         draggable: true,
       });
 
-      // Edge from input to LLM
+      // Edge from input to LLM (SOLID LINE)
       newEdges.push({
         id: 'input-llm',
         source: 'input',
         target: 'llm',
-        animated: true,
+        style: {
+          stroke: '#3b82f6',
+          strokeWidth: 2,
+          // Solid line - no strokeDasharray
+        },
+        data: {
+          condition: { type: 'always' as const },
+        },
       });
 
       // Output node
@@ -104,12 +111,19 @@ export default function FlowCanvas() {
         draggable: true,
       });
 
-      // Connect LLM directly to output (tools attach as side connections)
+      // Connect LLM directly to output (SOLID LINE)
       newEdges.push({
         id: 'llm-output',
         source: 'llm',
         target: 'output',
-        animated: true,
+        style: {
+          stroke: '#3b82f6',
+          strokeWidth: 2,
+          // Solid line - no strokeDasharray
+        },
+        data: {
+          condition: { type: 'always' as const },
+        },
       });
 
       setNodes(newNodes);
