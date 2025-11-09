@@ -35,6 +35,7 @@ export default function PropertiesPanel() {
   const [temperature, setTemperature] = useState(currentMCP?.configuration.temperature || 0.7);
   const [maxTokens, setMaxTokens] = useState(currentMCP?.configuration.maxTokens || 2000);
   const [systemPrompt, setSystemPrompt] = useState(currentMCP?.configuration.globalPrompt || '');
+  const [availableToolIds, setAvailableToolIds] = useState<string[]>([]);
 
   // Update local state when currentMCP or selectedNode changes
   useEffect(() => {
