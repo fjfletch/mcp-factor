@@ -453,6 +453,135 @@ function ResponseStepCard({
   );
 }
 
+// Add Step Drop Zone with Visual Feedback
+function AddStepDropZone({
+  onDrop,
+  afterStepId,
+}: {
+  onDrop: (e: React.DragEvent) => void;
+  afterStepId?: string;
+}) {
+  const { canAddStepType, workflowSteps } = useMCPBuilderStore();
+  const [isDragOver, setIsDragOver] = useState(false);
+  const [isInvalidDrop, setIsInvalidDrop] = useState(false);
+  const [draggedType, setDraggedType] = useState<'mcp' | 'response' | null>(null);
+
+  // Get contextual hint message
+  const getHintMessage = () => {
+    const afterStep = afterStepId ? workflowSteps.find(s => s.id === afterStepId) : null;
+    
+    if (!afterStepId) return 'First step must be an MCP';
+    if (afterStep?.type === 'mcp') return 'After MCP, you need a Response Handler';
+    if (afterStep?.type === 'response') return 'After Response, you can add another MCP';
+    return '';
+  };
+
+  const handleDragEnter = (e: React.DragEvent) => {
+    e.preventDefault();
+    
+    // Detect what's being dragged
+    const dataTypes = Array.from(e.dataTransfer.types);
+    let detectedType: 'mcp' | 'response' | null = null;
+    
+    if (dataTypes.includes('mcpconfigid')) detectedType = 'mcp';
+    else if (dataTypes.includes('responseconfigid')) detectedType = 'response';
+    
+    setDraggedType(detectedType);
+    setIsDragOver(true);
+    
+    // Check if this type is allowed
+    if (detectedType) {
+      const isAllowed = canAddStepType(detectedType, afterStepId);
+      setIsInvalidDrop(!isAllowed);
+    }
+  };
+
+  const handleDragOver = (e: React.DragEvent) => {
+    e.preventDefault();
+    if (!isDragOver) setIsDragOver(true);
+  };
+
+  const handleDragLeave = (e: React.DragEvent<HTMLDivElement>) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const x = e.clientX;
+    const y = e.clientY;
+    
+    const isStillInside = (
+      x >= rect.left && x <= rect.right &&
+      y >= rect.top && y <= rect.bottom
+    );
+    
+    if (!isStillInside) {
+      setIsDragOver(false);
+      setIsInvalidDrop(false);
+      setDraggedType(null);
+    }
+  };
+
+  const handleDropInternal = (e: React.DragEvent) => {
+    setIsDragOver(false);
+    setIsInvalidDrop(false);
+    setDraggedType(null);
+    onDrop(e);
+  };
+
+  return (
+    <div
+      onDragEnter={handleDragEnter}
+      onDragOver={handleDragOver}
+      onDragLeave={handleDragLeave}
+      onDrop={handleDropInternal}
+      className={`
+        w-full p-6 rounded-lg
+        border-2 border-dashed
+        transition-all duration-200
+        flex flex-col items-center justify-center gap-2
+        ${
+          isInvalidDrop
+            ? 'border-red-500 bg-red-50 dark:bg-red-950/20 cursor-not-allowed' 
+            : isDragOver 
+              ? 'border-primary bg-primary/10 scale-105 shadow-lg' 
+              : 'border-border hover:border-primary hover:bg-accent/50'
+        }
+      `}
+    >
+      <div className="flex items-center gap-2">
+        <Plus className={`h-5 w-5 ${
+          isInvalidDrop 
+            ? 'text-red-500' 
+            : isDragOver 
+              ? 'text-primary' 
+              : 'text-muted-foreground'
+        }`} />
+        
+        <span className={`text-sm font-medium ${
+          isInvalidDrop 
+            ? 'text-red-600 dark:text-red-400' 
+            : isDragOver 
+              ? 'text-primary' 
+              : 'text-muted-foreground'
+        }`}>
+          {isInvalidDrop 
+            ? '⚠️ Cannot drop here' 
+            : isDragOver 
+              ? 'Drop here to add step' 
+              : 'Drag items here'}
+        </span>
+      </div>
+      
+      {isInvalidDrop ? (
+        <span className="text-xs text-red-600 dark:text-red-400 text-center">
+          {getHintMessage()}
+        </span>
+      ) : !isDragOver && (
+        <span className="text-xs text-muted-foreground/60 text-center">
+          {getHintMessage()}
+        </span>
+      )}
+    </div>
+  );
+}
+
 // Draggable MCP Item Component
 function DraggableMCPItem({ config }: { config: any }) {
   const [isDragging, setIsDragging] = useState(false);
