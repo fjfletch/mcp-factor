@@ -1,0 +1,156 @@
+"use client";
+
+import { useState } from "react";
+import { Navigation } from "@/components/Navigation";
+import { Button } from "@/components/ui/button";
+import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Search, Star } from "lucide-react";
+import { mockMCPs } from "@/lib/mock-data";
+import { useToast } from "@/hooks/use-toast";
+
+export default function Marketplace() {
+  const { toast } = useToast();
+  const [searchQuery, setSearchQuery] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState("All");
+  const [sortBy, setSortBy] = useState("popular");
+
+  const categories = ["All", "E-commerce", "Travel", "Gaming", "Finance", "Communication", "DevOps"];
+
+  const handleUseMCP = (mcpId: string, mcpName: string) => {
+    toast({
+      title: "Installing MCP",
+      description: `Installing ${mcpName}...`
+    });
+    setTimeout(() => {
+      toast({
+        title: "MCP Installed",
+        description: `${mcpName} has been added to your MCPs`
+      });
+    }, 1000);
+  };
+
+  const handlePreview = (mcpId: string, mcpName: string) => {
+    toast({
+      title: "Opening Preview",
+      description: `Loading ${mcpName}...`
+    });
+  };
+
+  const filteredMCPs = mockMCPs.filter(mcp => {
+    const matchesSearch = searchQuery === '' ||
+      mcp.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      mcp.description.toLowerCase().includes(searchQuery.toLowerCase());
+    return matchesSearch;
+  }).sort((a, b) => {
+    switch(sortBy) {
+      case 'popular': return (b.uses || 0) - (a.uses || 0);
+      case 'newest': return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
+      case 'rating': return (b.stars || 0) - (a.stars || 0);
+      case 'uses': return (b.uses || 0) - (a.uses || 0);
+      default: return 0;
+    }
+  });
+
+  return (
+    <div className="min-h-screen bg-background">
+      <Navigation />
+      
+      <div className="container mx-auto px-4 py-8 max-w-7xl">
+        <h1 className="text-3xl font-bold mb-6">MCP Marketplace</h1>
+
+        {/* Search Bar */}
+        <div className="mb-6">
+          <div className="relative max-w-2xl">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+            <Input
+              type="search"
+              placeholder="Search MCPs..."
+              className="pl-10"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+            />
+          </div>
+        </div>
+
+        {/* Category Filters */}
+        <div className="flex gap-2 mb-4 flex-wrap">
+          {categories.map((category) => (
+            <Button
+              key={category}
+              variant={selectedCategory === category ? "default" : "outline"}
+              size="sm"
+              onClick={() => setSelectedCategory(category)}
+            >
+              {category}
+            </Button>
+          ))}
+        </div>
+
+        {/* Sort Options */}
+        <div className="mb-6">
+          <select
+            className="h-9 rounded-md border border-input bg-background px-3 text-sm"
+            value={sortBy}
+            onChange={(e) => setSortBy(e.target.value)}
+          >
+            <option value="popular">Most Popular</option>
+            <option value="newest">Newest</option>
+            <option value="rating">Top Rated</option>
+            <option value="uses">Most Used</option>
+          </select>
+        </div>
+
+        {/* MCP Grid */}
+        {filteredMCPs.length === 0 ? (
+          <div className="col-span-full text-center py-20">
+            <h2 className="text-xl font-semibold mb-2">No MCPs found</h2>
+            <p className="text-muted-foreground">Try adjusting your search or filters</p>
+          </div>
+        ) : (
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {filteredMCPs.map((mcp) => (
+              <Card key={mcp.id} className="hover:shadow-lg transition-shadow flex flex-col">
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2">
+                    <span className="text-2xl">{mcp.emoji}</span>
+                    {mcp.name}
+                  </CardTitle>
+                  <CardDescription>{mcp.description}</CardDescription>
+                  <div className="text-sm text-muted-foreground mt-2">by @{mcp.author}</div>
+                </CardHeader>
+                <CardContent className="mt-auto">
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="flex items-center gap-2">
+                      <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
+                      <span className="text-sm">{mcp.stars}</span>
+                      <span className="text-sm text-muted-foreground">({mcp.reviews})</span>
+                    </div>
+                    <span className="text-sm text-muted-foreground">
+                      {((mcp.uses || 0) / 1000).toFixed(1)}k uses
+                    </span>
+                  </div>
+                  <div className="flex gap-2">
+                    <Button 
+                      className="flex-1"
+                      onClick={() => handleUseMCP(mcp.id, mcp.name)}
+                    >
+                      Use
+                    </Button>
+                    <Button 
+                      variant="outline" 
+                      className="flex-1"
+                      onClick={() => handlePreview(mcp.id, mcp.name)}
+                    >
+                      Preview
+                    </Button>
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
