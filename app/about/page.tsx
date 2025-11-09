@@ -49,8 +49,16 @@ export default function About() {
       answer: "Piraeus is a visual, no-code platform for building AI integrations. It allows developers and businesses to connect APIs to LLMs without writing complex integration code, making AI implementation faster and more accessible."
     },
     {
-      question: "Who can use Piraeus?",
-      answer: "Piraeus is designed for developers, product teams, and businesses of all sizes. Whether you're a startup building your first AI feature or an enterprise scaling AI across your organization, Piraeus provides the tools you need."
+      question: "Who should use Piraeus?",
+      answer: "Anyone who wants to create and utilize their agents in a easier and better way. Builders, consumers, and non-technical users alike would be able to use our platform."
+    },
+    {
+      question: "Why does this matter?",
+      answer: "We believe that most current MCP creation tools are inconsistent and overly complicated. Piraeus aims to change that by making MCPs accessible to a broader community of developers and users. During our research, we also found no dedicated marketplace for MCPs — a gap we're determined to fill by building a platform that benefits everyone in the ecosystem."
+    },
+    {
+      question: "What does the technical stack look like?",
+      answer: "Our tech stack includes a PostgreSQL database and a Python FastAPI backend hosted on AWS. The frontend is built with Vite and React, hosted on Emergent. We also integrate multiple APIs — including OpenAI and Anthropic endpoints — to enable seamless interaction with LLMs."
     },
     {
       question: "What's planned for the future?",
