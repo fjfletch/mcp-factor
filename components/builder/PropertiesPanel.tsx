@@ -16,7 +16,7 @@ import APIConfigModal from '@/components/modals/APIConfigModal';
 import ToolConfigModal from '@/components/modals/ToolConfigModal';
 
 export default function PropertiesPanel() {
-  const { currentMCP, selectedNode, updateMCP, removeAPI, removeTool, updateAPI, updateTool, selectNode } = useMCPStore();
+  const { currentMCP, selectedNode, updateMCP, removeAPI, removeTool, updateAPI, updateTool, selectNode, updateLLMNode, getLLMNode } = useMCPStore();
   const { toast } = useToast();
   const [testQuery, setTestQuery] = useState('');
   const [testResult, setTestResult] = useState('');
@@ -26,19 +26,32 @@ export default function PropertiesPanel() {
   const [editingAPIConfig, setEditingAPIConfig] = useState<any>(null);
   const [editingToolConfig, setEditingToolConfig] = useState<any>(null);
   
-  // LLM configuration state
+  // LLM configuration state for selected node
+  const [llmMode, setLlmMode] = useState<'normal' | 'mcp'>('normal');
   const [model, setModel] = useState(currentMCP?.configuration.model || 'gpt-3.5-turbo');
   const [temperature, setTemperature] = useState(currentMCP?.configuration.temperature || 0.7);
   const [maxTokens, setMaxTokens] = useState(currentMCP?.configuration.maxTokens || 2000);
+  const [systemPrompt, setSystemPrompt] = useState(currentMCP?.configuration.globalPrompt || '');
 
-  // Update local state when currentMCP changes
+  // Update local state when currentMCP or selectedNode changes
   useEffect(() => {
     if (currentMCP) {
       setModel(currentMCP.configuration.model);
       setTemperature(currentMCP.configuration.temperature);
       setMaxTokens(currentMCP.configuration.maxTokens);
+      setSystemPrompt(currentMCP.configuration.globalPrompt);
     }
-  }, [currentMCP]);
+    
+    // Load LLM node config if an LLM node is selected
+    if (selectedNode && (selectedNode.id === 'llm' || selectedNode.id.startsWith('llm-decision'))) {
+      const nodeConfig = getLLMNode(selectedNode.id);
+      setLlmMode(nodeConfig.mode);
+      setModel(nodeConfig.model);
+      setTemperature(nodeConfig.temperature);
+      setMaxTokens(nodeConfig.maxTokens);
+      setSystemPrompt(nodeConfig.systemPrompt || '');
+    }
+  }, [currentMCP, selectedNode, getLLMNode]);
 
   const runTest = async () => {
     if (!testQuery.trim()) return;
