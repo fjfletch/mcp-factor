@@ -13,12 +13,8 @@ import {
 } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Navigation } from "@/components/Navigation";
-import dynamic from 'next/dynamic';
 import { motion } from 'framer-motion';
-
-const ParticleBackground = dynamic(() => import('@/components/ParticleBackground'), {
-  ssr: false,
-});
+import ParticleBackgroundSimple from '@/components/ParticleBackgroundSimple';
 
 export default function Home() {
   const [scrollY, setScrollY] = useState(0);
