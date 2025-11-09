@@ -73,7 +73,7 @@ export function MCPDetailModal({ open, onOpenChange, mcpId, onUseMCP }: MCPDetai
     // Generate example based on tool
     let exampleInput = "";
     let exampleOutput = "";
-    const steps = [];
+    let steps: string[] = [];
 
     if (firstTool.name.includes("weather")) {
       exampleInput = "What's the weather in San Francisco?";
