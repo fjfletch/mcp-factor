@@ -252,7 +252,7 @@ export default function Home() {
                   Create Free Account
                 </Button>
               </Link>
-              <Link href="/marketplace">
+              <Link href="/docs">
                 <Button 
                   size="lg" 
                   variant="outline" 
@@ -263,7 +263,7 @@ export default function Home() {
                     backgroundColor: 'rgba(255, 255, 255, 0.6)'
                   }}
                 >
-                  Browse Marketplace
+                  Learn More
                 </Button>
               </Link>
             </div>
