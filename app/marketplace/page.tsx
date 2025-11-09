@@ -119,7 +119,7 @@ export default function Marketplace() {
         ) : (
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {filteredMCPs.map((mcp) => (
-              <Card key={mcp.id} className="hover:shadow-lg transition-shadow flex flex-col">
+              <Card key={mcp.id} className="hover:shadow-lg transition-shadow flex flex-col bg-white/90 backdrop-blur-sm border-white/30">
                 <CardHeader>
                   <CardTitle className="flex items-center gap-2">
                     <span className="text-2xl">{mcp.emoji}</span>
