@@ -11,7 +11,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Badge } from '@/components/ui/badge';
 import { useToast } from '@/components/ui/use-toast';
-import { Plus, Edit, Trash2, Settings, Wifi, Tool, MessageSquare, FileText } from 'lucide-react';
+import { Plus, Edit, Trash2, Settings, Wifi, Wrench, MessageSquare, FileText } from 'lucide-react';
 import APIConfigModal from '@/components/modals/APIConfigModal';
 import ToolConfigModal from '@/components/modals/ToolConfigModal';
 import { APIConfig, MCPTool } from '@/types/mcp';
