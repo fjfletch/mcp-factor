@@ -4,7 +4,7 @@ import { Navigation } from "@/components/Navigation";
 import { Button } from "@/components/ui/button";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { BarChart3, Activity, Zap, Edit, TestTube, Trash2, Star } from "lucide-react";
+import { BarChart3, Activity, Zap, Edit, TestTube, Trash2, Star, Plus } from "lucide-react";
 import Link from "next/link";
 import { userMCPs, mockMCPs } from "@/lib/mock-data";
 import { useToast } from "@/hooks/use-toast";
