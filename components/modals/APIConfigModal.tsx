@@ -177,7 +177,7 @@ export function APIConfigModal({ open, onOpenChange, onSave, existingAPI }: APIC
                 id="timeout"
                 type="number"
                 value={timeout}
-                onChange={(e) => setTimeout(parseInt(e.target.value))}
+                onChange={(e) => setTimeoutValue(parseInt(e.target.value))}
               />
             </div>
           </TabsContent>
