@@ -94,13 +94,13 @@ export default function Home() {
 
       {/* Featured Integrations */}
       <section className="py-16 px-4">
-        <div className="container mx-auto">
+        <div className="container mx-auto max-w-6xl">
           <h2 className="text-3xl font-bold text-center mb-12">
             Featured Integrations
           </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {featuredMCPs.map((mcp, index) => (
-              <Card key={index} className="hover:shadow-lg transition-shadow">
+          <div className="grid md:grid-cols-3 gap-6">
+            {featuredMCPs.map((mcp) => (
+              <Card key={mcp.id} className="hover:shadow-lg transition-shadow">
                 <CardHeader>
                   <CardTitle className="flex items-center gap-2">
                     <span className="text-2xl">{mcp.emoji}</span>
@@ -109,17 +109,24 @@ export default function Home() {
                   <CardDescription>{mcp.description}</CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <div className="flex items-center justify-between text-sm text-muted-foreground">
+                  <div className="flex items-center gap-2 text-sm text-muted-foreground mb-3">
                     <div className="flex items-center gap-1">
                       <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
                       <span>{mcp.stars}</span>
-                      <span className="ml-1">({mcp.reviews} reviews)</span>
+                      <span>({mcp.reviews} reviews)</span>
                     </div>
-                    <span>{formatNumber(mcp.uses)} uses</span>
+                  </div>
+                  <div className="text-sm text-muted-foreground">
+                    {(mcp.uses || 0).toLocaleString()} uses
                   </div>
                 </CardContent>
               </Card>
             ))}
+          </div>
+          <div className="text-center mt-8">
+            <Link href="/marketplace">
+              <Button variant="outline">View All Integrations</Button>
+            </Link>
           </div>
         </div>
       </section>
