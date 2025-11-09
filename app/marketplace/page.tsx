@@ -99,7 +99,7 @@ export default function Marketplace() {
         {/* Sort Options */}
         <div className="mb-6">
           <select
-            className="h-9 rounded-md border border-input bg-background px-3 text-sm"
+            className="h-9 rounded-md border border-white/30 bg-white/90 backdrop-blur-sm px-3 text-sm"
             value={sortBy}
             onChange={(e) => setSortBy(e.target.value)}
           >
