@@ -137,7 +137,29 @@ export const useMCPStore = create<MCPStoreState>((set, get) => ({
         : null,
     })),
 
-  selectNode: (node) => set({ selectedNode: node }),
+  selectNode: (node) => set({ selectedNode: node, selectedEdge: null }),
+
+  selectEdge: (edge) => set({ selectedEdge: edge, selectedNode: null }),
+
+  updateEdge: (edgeId, updates) =>
+    set((state) => {
+      const updatedEdges = state.flowEdges.map((edge) =>
+        edge.id === edgeId ? { ...edge, ...updates } : edge
+      );
+      return {
+        flowEdges: updatedEdges,
+        currentMCP: state.currentMCP
+          ? {
+              ...state.currentMCP,
+              flow: {
+                nodes: state.flowNodes,
+                edges: updatedEdges,
+              },
+              updatedAt: new Date().toISOString(),
+            }
+          : null,
+      };
+    }),
 
   updateLLMNode: (nodeId, config) =>
     set((state) => ({
