@@ -209,7 +209,7 @@ export default function Home() {
                     <CardHeader>
                       <div 
                         className="w-16 h-16 rounded-2xl flex items-center justify-center mb-4 mx-auto backdrop-blur-sm"
-                        style={{ backgroundColor: 'rgba(254, 220, 151, 0.8)', border: '2px solid rgba(254, 220, 151, 0.4)' }}
+                        style={{ backgroundColor: 'rgba(254, 220, 151, 0.5)', border: '2px solid rgba(254, 220, 151, 0.3)' }}
                       >
                         <Icon className="w-8 h-8" style={{ color: '#033F63' }} />
                       </div>
