@@ -68,7 +68,7 @@ function ParticleSphere({ scrollProgress }: { scrollProgress: number }) {
     if (!pointsRef.current) return;
     
     // Set usage on first frame
-    const posAttr = pointsRef.current.geometry.attributes.position;
+    const posAttr = pointsRef.current.geometry.attributes.position as THREE.BufferAttribute;
     if (posAttr && posAttr.usage !== THREE.DynamicDrawUsage) {
       posAttr.usage = THREE.DynamicDrawUsage;
     }
