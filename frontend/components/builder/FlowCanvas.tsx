@@ -118,12 +118,12 @@ export default function FlowCanvas() {
       type: node.id.startsWith('tool-')
         ? 'tool'
         : node.id.startsWith('api-')
-        ? 'api'
+        ? 'tool' // API nodes are treated as tool type
         : node.id === 'llm'
         ? 'llm'
-        : node.id === 'input'
-        ? 'input'
-        : 'output',
+        : node.id === 'query'
+        ? 'query'
+        : 'response',
       position: node.position,
       data: node.data,
     });
