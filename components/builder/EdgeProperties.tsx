@@ -79,14 +79,14 @@ export default function EdgeProperties({ edge }: EdgePropertiesProps) {
       </CardHeader>
       <CardContent className="space-y-4">
         {/* Connection Info */}
-        <div className=\"bg-muted p-3 rounded-lg text-sm space-y-2\">
-          <div className=\"flex items-center justify-between\">
-            <span className=\"text-muted-foreground\">Source:</span>
-            <Badge variant=\"outline\">{sourceNode?.data.label}</Badge>
+        <div className="bg-muted p-3 rounded-lg text-sm space-y-2">
+          <div className="flex items-center justify-between">
+            <span className="text-muted-foreground">Source:</span>
+            <Badge variant="outline">{sourceNode?.data.label}</Badge>
           </div>
-          <div className=\"flex items-center justify-between\">
-            <span className=\"text-muted-foreground\">Target:</span>
-            <Badge variant=\"outline\">{targetNode?.data.label}</Badge>
+          <div className="flex items-center justify-between">
+            <span className="text-muted-foreground">Target:</span>
+            <Badge variant="outline">{targetNode?.data.label}</Badge>
           </div>
         </div>
 
@@ -98,73 +98,73 @@ export default function EdgeProperties({ edge }: EdgePropertiesProps) {
           <Input
             value={label}
             onChange={(e) => setLabel(e.target.value)}
-            placeholder=\"e.g., Success Path, Error Path\"
+            placeholder="e.g., Success Path, Error Path"
           />
-          <p className=\"text-xs text-muted-foreground mt-1\">
+          <p className="text-xs text-muted-foreground mt-1">
             Optional label displayed on the connection
           </p>
         </div>
 
         {/* Condition */}
-        <div className=\"space-y-2\">
+        <div className="space-y-2">
           <Label>Condition</Label>
           <Select value={conditionType} onValueChange={(v: any) => setConditionType(v)}>
             <SelectTrigger>
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value=\"always\">
-                <div className=\"flex items-center gap-2\">
+              <SelectItem value="always">
+                <div className="flex items-center gap-2">
                   <span>➡️</span>
                   <div>
-                    <p className=\"font-medium\">Always</p>
-                    <p className=\"text-xs text-muted-foreground\">Connection is always taken</p>
+                    <p className="font-medium">Always</p>
+                    <p className="text-xs text-muted-foreground">Connection is always taken</p>
                   </div>
                 </div>
               </SelectItem>
-              <SelectItem value=\"on-success\">
-                <div className=\"flex items-center gap-2\">
+              <SelectItem value="on-success">
+                <div className="flex items-center gap-2">
                   <span>✅</span>
                   <div>
-                    <p className=\"font-medium\">On Success</p>
-                    <p className=\"text-xs text-muted-foreground\">Only when status 200-299</p>
+                    <p className="font-medium">On Success</p>
+                    <p className="text-xs text-muted-foreground">Only when status 200-299</p>
                   </div>
                 </div>
               </SelectItem>
-              <SelectItem value=\"on-error\">
-                <div className=\"flex items-center gap-2\">
+              <SelectItem value="on-error">
+                <div className="flex items-center gap-2">
                   <span>❌</span>
                   <div>
-                    <p className=\"font-medium\">On Error</p>
-                    <p className=\"text-xs text-muted-foreground\">Only when status 400+</p>
+                    <p className="font-medium">On Error</p>
+                    <p className="text-xs text-muted-foreground">Only when status 400+</p>
                   </div>
                 </div>
               </SelectItem>
-              <SelectItem value=\"custom\">
-                <div className=\"flex items-center gap-2\">
+              <SelectItem value="custom">
+                <div className="flex items-center gap-2">
                   <span>⚙️</span>
                   <div>
-                    <p className=\"font-medium\">Custom Condition</p>
-                    <p className=\"text-xs text-muted-foreground\">JSONPath expression</p>
+                    <p className="font-medium">Custom Condition</p>
+                    <p className="text-xs text-muted-foreground">JSONPath expression</p>
                   </div>
                 </div>
               </SelectItem>
             </SelectContent>
           </Select>
-          <p className=\"text-xs text-muted-foreground\">
+          <p className="text-xs text-muted-foreground">
             Controls when this connection is taken during execution
           </p>
 
           {conditionType === 'custom' && (
-            <div className=\"mt-2\">
-              <Label className=\"text-xs\">JSONPath Expression</Label>
+            <div className="mt-2">
+              <Label className="text-xs">JSONPath Expression</Label>
               <Input
                 value={expression}
                 onChange={(e) => setExpression(e.target.value)}
-                placeholder=\"$.status == 'success'\"
-                className=\"font-mono text-sm\"
+                placeholder="$.status == 'success'"
+                className="font-mono text-sm"
               />
-              <p className=\"text-xs text-muted-foreground mt-1\">
+              <p className="text-xs text-muted-foreground mt-1">
                 Expression evaluated against the node output
               </p>
             </div>
@@ -177,12 +177,12 @@ export default function EdgeProperties({ edge }: EdgePropertiesProps) {
         <div>
           <Label>Priority</Label>
           <Input
-            type=\"number\"
+            type="number"
             value={priority}
             onChange={(e) => setPriority(e.target.value)}
-            placeholder=\"0\"
+            placeholder="0"
           />
-          <p className=\"text-xs text-muted-foreground mt-1\">
+          <p className="text-xs text-muted-foreground mt-1">
             Lower numbers execute first when multiple connections exist (0 = highest priority)
           </p>
         </div>
@@ -195,31 +195,31 @@ export default function EdgeProperties({ edge }: EdgePropertiesProps) {
           <Textarea
             value={description}
             onChange={(e) => setDescription(e.target.value)}
-            placeholder=\"Additional notes about this connection...\"
+            placeholder="Additional notes about this connection..."
             rows={3}
           />
         </div>
 
         {/* Visual Preview */}
-        <div className=\"bg-muted p-3 rounded-lg text-sm\">
-          <p className=\"font-semibold mb-2\">Visual Styling:</p>
-          <div className=\"flex items-center gap-2\">
+        <div className="bg-muted p-3 rounded-lg text-sm">
+          <p className="font-semibold mb-2">Visual Styling:</p>
+          <div className="flex items-center gap-2">
             <span>{getConditionIcon(conditionType)}</span>
-            <div className=\"flex-1 border-t-2\" style={{
+            <div className="flex-1 border-t-2" style={{
               borderColor: conditionType === 'on-success' ? '#22c55e' : 
                           conditionType === 'on-error' ? '#ef4444' :
                           conditionType === 'custom' ? '#f59e0b' : '#3b82f6',
             }}></div>
             {priority !== '0' && (
-              <Badge variant=\"outline\" className=\"text-xs\">{priority}</Badge>
+              <Badge variant="outline" className="text-xs">{priority}</Badge>
             )}
             {label && (
-              <Badge className=\"text-xs\">{label}</Badge>
+              <Badge className="text-xs">{label}</Badge>
             )}
           </div>
         </div>
 
-        <Button onClick={handleSave} className=\"w-full\">
+        <Button onClick={handleSave} className="w-full">
           Save Changes
         </Button>
       </CardContent>
