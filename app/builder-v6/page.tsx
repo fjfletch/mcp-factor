@@ -24,11 +24,9 @@ export default function BuilderV6Page() {
   // Load data from backend on mount (with graceful fallback)
   useEffect(() => {
     const loadData = async () => {
-      // Backend loading disabled - Next.js route not working in preview URL
-      // Works locally but preview deployment has routing issues
-      // TODO: Fix Next.js API route deployment
+      // Backend loading enabled - investigating route issues
       
-      const ENABLE_BACKEND = false; // Disabled until route works in preview
+      const ENABLE_BACKEND = true; // Enabled for debugging
       
       if (ENABLE_BACKEND) {
         try {
