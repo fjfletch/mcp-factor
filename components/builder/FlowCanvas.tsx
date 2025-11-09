@@ -25,6 +25,12 @@ import BlocksPalette from './BlocksPalette';
 import { LLMNode } from '@/components/flow/LLMNode';
 import { ToolNode } from '@/components/flow/ToolNode';
 
+// Custom node types
+const nodeTypes = {
+  llmNode: LLMNode,
+  toolNode: ToolNode,
+};
+
 export default function FlowCanvas() {
   const { currentMCP, selectNode, llmNodes } = useMCPStore();
   const { toast } = useToast();
