@@ -161,14 +161,7 @@ export default function BuilderPage() {
 
       {/* Main Content */}
       <div className="flex flex-1 overflow-hidden">
-        {/* Left Sidebar */}
-        {isSidebarOpen && (
-          <div className="w-80 border-r overflow-y-auto bg-muted/30">
-            <BuilderSidebar />
-          </div>
-        )}
-
-        {/* Center Canvas */}
+        {/* Center Canvas with Blocks Palette */}
         <div className="flex-1 overflow-hidden">
           <FlowCanvas />
         </div>
