@@ -150,8 +150,9 @@ export default function Home() {
         </div>
 
         {/* Small boat 3 - randomly placed */}
-        <div id="boat3" className="absolute right-[5%] md:right-[7%]" style={{ 
-          bottom: 'calc(1% + 0px)',
+        <div id="boat3" className="absolute" style={{ 
+          right: `${boat3Pos.right}%`,
+          bottom: `${boat3Pos.bottom}%`,
           animation: 'waveMotion3 9.5s ease-in-out infinite'
         }}>
           <svg width="50" height="50" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" className="md:w-16 md:h-16">
