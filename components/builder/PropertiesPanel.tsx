@@ -301,6 +301,58 @@ ${mockResponse.tool_calls
       );
     }
 
+    // Prompt node
+    if (selectedNode.id.startsWith('prompt-')) {
+      const promptId = selectedNode.data?.promptId;
+      const prompt = currentMCP?.prompts.find((p) => p.id === promptId);
+      
+      if (!prompt) {
+        return (
+          <Card>
+            <CardContent className="p-6 text-center text-muted-foreground">
+              <p className="text-sm">Prompt not found in configuration</p>
+            </CardContent>
+          </Card>
+        );
+      }
+
+      return (
+        <Card>
+          <CardHeader>
+            <CardTitle className="text-lg">
+              {prompt.type === 'system' ? '⚙️' : '💬'} Prompt: {prompt.type}
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-3">
+            <div>
+              <p className="text-xs text-muted-foreground">Type</p>
+              <Badge variant="outline" className="mt-1">
+                {prompt.type}
+              </Badge>
+            </div>
+            <div>
+              <p className="text-xs text-muted-foreground mb-1">Content</p>
+              <Textarea
+                value={prompt.content}
+                readOnly
+                rows={6}
+                className="text-xs"
+              />
+            </div>
+            {prompt.trigger && (
+              <div>
+                <p className="text-xs text-muted-foreground">Trigger</p>
+                <p className="text-sm font-mono">{prompt.trigger}</p>
+              </div>
+            )}
+            <p className="text-xs text-muted-foreground">
+              💡 Edit prompts in the Prompts section of the blocks palette
+            </p>
+          </CardContent>
+        </Card>
+      );
+    }
+
     // LLM node
     if (selectedNode.id === 'llm' || selectedNode.id.startsWith('llm-decision')) {
       const handleUpdateLLMNode = () => {
