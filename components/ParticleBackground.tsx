@@ -118,11 +118,17 @@ function Particles({ count = 5000, scrollY }: { count?: number; scrollY: number 
 }
 
 export default function ParticleBackground({ scrollY }: { scrollY: number }) {
+  if (typeof window === 'undefined') {
+    return null;
+  }
+
   return (
     <div className="fixed inset-0 -z-10">
       <Canvas
         camera={{ position: [0, 0, 30], fov: 75 }}
         style={{ background: '#f8f9fa' }}
+        gl={{ antialias: true, alpha: false }}
+        dpr={[1, 2]}
       >
         <Particles count={5000} scrollY={scrollY} />
       </Canvas>
