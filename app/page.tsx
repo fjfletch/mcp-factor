@@ -14,25 +14,14 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { Navigation } from "@/components/Navigation";
 import { motion } from 'framer-motion';
-import dynamic from 'next/dynamic';
-
-const ParticleBackground = dynamic(
-  () => import('@/components/ParticleBackground3D').then(mod => mod.ParticleBackground),
-  { ssr: false }
-);
+import ParticleSpiralCanvas from '@/components/ParticleSpiralCanvas';
 
 export default function Home() {
   const [scrollY, setScrollY] = useState(0);
-  const [scrollProgress, setScrollProgress] = useState(0);
 
   useEffect(() => {
     const handleScroll = () => {
-      const scrollTop = window.scrollY;
-      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-      const progress = Math.min(scrollTop / docHeight, 1);
-      
-      setScrollY(scrollTop);
-      setScrollProgress(progress);
+      setScrollY(window.scrollY);
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
