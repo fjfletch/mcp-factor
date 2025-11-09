@@ -71,57 +71,74 @@ export default function Home() {
           </svg>
         </div>
 
-        {/* Large lead boat - bottom left */}
-        <div className="absolute left-[5%] md:left-[8%]" style={{ 
+        {/* Large lead boat - bottom left with two masts */}
+        <div id="leadBoat" className="absolute left-[5%] md:left-[8%]" style={{ 
           bottom: 'calc(6% + 0px)',
           animation: 'waveMotion 10s ease-in-out infinite'
         }}>
           <svg width="100" height="100" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" className="md:w-32 md:h-32">
-            {/* Large boat hull */}
-            <path d="M15,65 L85,65 L80,85 L20,85 Z" fill="#654321" stroke="#4a3218" strokeWidth="2.5"/>
-            {/* Large boat deck */}
-            <rect x="25" y="53" width="50" height="12" fill="#8B4513" stroke="#654321" strokeWidth="2"/>
-            {/* Mast */}
-            <line x1="50" y1="53" x2="50" y2="15" stroke="#654321" strokeWidth="4"/>
-            {/* Large sail */}
-            <path d="M50,20 L75,37 L50,54 Z" fill="#FEDC97" stroke="#B5B682" strokeWidth="2" opacity="0.9"/>
-            {/* Flag */}
-            <path d="M50,15 L62,19 L50,23 Z" fill="#033f63"/>
-            {/* Cabin */}
-            <rect x="35" y="45" width="30" height="8" fill="#A0522D" stroke="#654321" strokeWidth="1.5"/>
+            {/* Large boat hull - single layer */}
+            <path d="M15,70 L85,70 L80,85 L20,85 Z" fill="#654321" stroke="#4a3218" strokeWidth="2.5"/>
+            {/* Deck - single layer */}
+            <rect x="20" y="58" width="60" height="12" fill="#8B4513" stroke="#654321" strokeWidth="2"/>
+            
+            {/* First Mast (left) */}
+            <line x1="35" y1="58" x2="35" y2="15" stroke="#654321" strokeWidth="4"/>
+            {/* First sail */}
+            <path d="M35,20 L58,35 L35,50 Z" fill="#FEDC97" stroke="#B5B682" strokeWidth="2" opacity="0.9"/>
+            
+            {/* Second Mast (right) */}
+            <line x1="65" y1="58" x2="65" y2="20" stroke="#654321" strokeWidth="4"/>
+            {/* Second sail */}
+            <path d="M65,25 L85,38 L65,51 Z" fill="#FEDC97" stroke="#B5B682" strokeWidth="2" opacity="0.9"/>
+            
+            {/* Flag on first mast */}
+            <path d="M35,15 L47,19 L35,23 Z" fill="#033f63"/>
           </svg>
         </div>
 
-        {/* Connecting lines - drawn with SVG for smooth animation */}
+        {/* Connecting lines - drawn with SVG that moves with boats */}
         <svg className="absolute inset-0 w-full h-full pointer-events-none" style={{ zIndex: 5 }}>
-          {/* Line from large boat to boat 1 (top right) */}
-          <line className="tow-line tow-line-1" stroke="#654321" strokeWidth="2" strokeDasharray="5,5" opacity="0.6">
-            <animate attributeName="x1" dur="10s" repeatCount="indefinite" values="15%;15%;15%;15%" />
-            <animate attributeName="y1" dur="10s" repeatCount="indefinite" values="85%;88%;92%;88%" />
-            <animate attributeName="x2" dur="10s" repeatCount="indefinite" values="78%;78%;78%;78%" />
-            <animate attributeName="y2" dur="10s" repeatCount="indefinite" values="85%;88%;92%;88%" />
+          {/* Line from large boat (back) to boat 1 (front) */}
+          <line className="tow-line" stroke="#654321" strokeWidth="2" strokeDasharray="5,5" opacity="0.6">
+            <animate attributeName="x1" dur="10s" repeatCount="indefinite" 
+              values="13%;13%;13%;13%;13%" />
+            <animate attributeName="y1" dur="10s" repeatCount="indefinite" 
+              values="88%;86%;82%;86%;88%" />
+            <animate attributeName="x2" dur="10s" repeatCount="indefinite" 
+              values="72%;72%;72%;72%;72%" />
+            <animate attributeName="y2" dur="10s" repeatCount="indefinite" 
+              values="82%;80%;76%;80%;82%" />
           </line>
           
-          {/* Line from large boat to boat 2 (middle right) */}
-          <line className="tow-line tow-line-2" stroke="#654321" strokeWidth="2" strokeDasharray="5,5" opacity="0.6">
-            <animate attributeName="x1" dur="10s" repeatCount="indefinite" values="15%;15%;15%;15%" />
-            <animate attributeName="y1" dur="10s" repeatCount="indefinite" values="85%;88%;92%;88%" />
-            <animate attributeName="x2" dur="10s" repeatCount="indefinite" values="82%;82%;82%;82%" />
-            <animate attributeName="y2" dur="10s" repeatCount="indefinite" values="91%;94%;98%;94%" />
+          {/* Line from large boat to boat 2 */}
+          <line className="tow-line" stroke="#654321" strokeWidth="2" strokeDasharray="5,5" opacity="0.6">
+            <animate attributeName="x1" dur="10s" repeatCount="indefinite" 
+              values="13%;13%;13%;13%;13%" />
+            <animate attributeName="y1" dur="10s" repeatCount="indefinite" 
+              values="88%;86%;82%;86%;88%" />
+            <animate attributeName="x2" dur="10s" repeatCount="indefinite" 
+              values="80%;80%;80%;80%;80%" />
+            <animate attributeName="y2" dur="10s" repeatCount="indefinite" 
+              values="91%;89%;85%;89%;91%" />
           </line>
           
-          {/* Line from large boat to boat 3 (bottom right) */}
-          <line className="tow-line tow-line-3" stroke="#654321" strokeWidth="2" strokeDasharray="5,5" opacity="0.6">
-            <animate attributeName="x1" dur="10s" repeatCount="indefinite" values="15%;15%;15%;15%" />
-            <animate attributeName="y1" dur="10s" repeatCount="indefinite" values="85%;88%;92%;88%" />
-            <animate attributeName="x2" dur="10s" repeatCount="indefinite" values="86%;86%;86%;86%" />
-            <animate attributeName="y2" dur="10s" repeatCount="indefinite" values="97%;100%;104%;100%" />
+          {/* Line from large boat to boat 3 */}
+          <line className="tow-line" stroke="#654321" strokeWidth="2" strokeDasharray="5,5" opacity="0.6">
+            <animate attributeName="x1" dur="10s" repeatCount="indefinite" 
+              values="13%;13%;13%;13%;13%" />
+            <animate attributeName="y1" dur="10s" repeatCount="indefinite" 
+              values="88%;86%;82%;86%;88%" />
+            <animate attributeName="x2" dur="10s" repeatCount="indefinite" 
+              values="85%;85%;85%;85%;85%" />
+            <animate attributeName="y2" dur="10s" repeatCount="indefinite" 
+              values="96%;94%;90%;94%;96%" />
           </line>
         </svg>
 
-        {/* Small boat 1 - top of triangle (right side, higher) */}
-        <div className="absolute right-[8%] md:right-[10%]" style={{ 
-          bottom: 'calc(12% + 0px)',
+        {/* Small boat 1 - randomly placed in bottom right */}
+        <div id="boat1" className="absolute right-[15%] md:right-[18%]" style={{ 
+          bottom: 'calc(8% + 0px)',
           animation: 'waveMotion 10s ease-in-out infinite'
         }}>
           <svg width="50" height="50" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" className="md:w-16 md:h-16">
@@ -133,9 +150,9 @@ export default function Home() {
           </svg>
         </div>
 
-        {/* Small boat 2 - middle of triangle */}
-        <div className="absolute right-[5%] md:right-[7%]" style={{ 
-          bottom: 'calc(6% + 0px)',
+        {/* Small boat 2 - randomly placed */}
+        <div id="boat2" className="absolute right-[8%] md:right-[10%]" style={{ 
+          bottom: 'calc(3% + 0px)',
           animation: 'waveMotion 10s ease-in-out infinite'
         }}>
           <svg width="50" height="50" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" className="md:w-16 md:h-16">
@@ -147,8 +164,8 @@ export default function Home() {
           </svg>
         </div>
 
-        {/* Small boat 3 - bottom of triangle */}
-        <div className="absolute right-[2%] md:right-[4%]" style={{ 
+        {/* Small boat 3 - randomly placed */}
+        <div id="boat3" className="absolute right-[3%] md:right-[5%]" style={{ 
           bottom: 'calc(0% + 0px)',
           animation: 'waveMotion 10s ease-in-out infinite'
         }}>
