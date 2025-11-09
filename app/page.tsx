@@ -14,11 +14,7 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { Navigation } from "@/components/Navigation";
 import { motion } from 'framer-motion';
-import dynamic from 'next/dynamic';
-
-const ParticlesSphere3D = dynamic(() => import('@/components/ParticlesSphere'), {
-  ssr: false,
-});
+import ParticleSphereCanvas from '@/components/ParticleSphereCanvas';
 
 export default function Home() {
   const [scrollY, setScrollY] = useState(0);
