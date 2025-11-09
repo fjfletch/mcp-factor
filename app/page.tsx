@@ -87,7 +87,7 @@ export default function Home() {
           transition={{ duration: 0.8 }}
           className="container mx-auto max-w-5xl text-center"
         >
-          <div className="backdrop-blur-lg bg-white/30 border border-white/40 rounded-3xl p-12 shadow-2xl">
+          <div className="backdrop-blur-lg bg-white/15 border border-white/25 rounded-3xl p-12 shadow-2xl">
             <h1 className="text-6xl md:text-7xl font-bold mb-6" style={{ color: '#033F63' }}>
               Provide your agents with the tools they need
             </h1>
