@@ -21,7 +21,7 @@ export function Navigation() {
     { href: "/my-mcps", label: "My MCPs" },
     { href: "/marketplace", label: "Marketplace" },
     { href: "/docs", label: "Documentation" },
-    { href: "/api", label: "API" },
+    { href: "/developer", label: "API" },
   ];
 
   return (
