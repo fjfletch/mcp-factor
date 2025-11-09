@@ -164,24 +164,23 @@ export function MCPDetailModal({ open, onOpenChange, mcpId, onUseMCP }: MCPDetai
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-w-5xl max-h-[90vh] overflow-y-auto">
-        {loading ? (
-          <div className="flex items-center justify-center py-12">
-            <Loader2 className="h-8 w-8 animate-spin text-primary" />
-            <span className="ml-3 text-muted-foreground">Loading MCP details...</span>
-          </div>
-        ) : error ? (
-          <div className="py-12 text-center">
-            <p className="text-red-600 mb-4">{error}</p>
-            <Button onClick={() => mcpId && fetchMCPDetails(mcpId)}>Retry</Button>
-          </div>
-        ) : mcpDetails ? (
-          <>
-            <DialogHeader>
-              <DialogTitle className="text-3xl flex items-center gap-2">
+        <DialogHeader>
+          <DialogTitle className="text-3xl flex items-center gap-2">
+            {loading ? (
+              "Loading..."
+            ) : error ? (
+              "Error"
+            ) : mcpDetails ? (
+              <>
                 <span className="text-3xl">{mcpDetails.emoji}</span>
                 <span>{mcpDetails.name}</span>
-              </DialogTitle>
-              <DialogDescription>
+              </>
+            ) : (
+              "MCP Details"
+            )}
+          </DialogTitle>
+          {mcpDetails && (
+            <DialogDescription>
                 <div className="flex items-center gap-4 mt-2 flex-wrap">
                   <span>by @{mcpDetails.author}</span>
                   {mcpDetails.stars && (
