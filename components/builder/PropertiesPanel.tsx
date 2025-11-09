@@ -163,9 +163,9 @@ ${mockResponse.tool_calls
             </div>
             <div>
               <p className="text-xs text-muted-foreground mb-2">Routes ({api.routes.length})</p>
-              <div className="space-y-1 max-h-40 overflow-y-auto">
+              <div className="space-y-2 max-h-60 overflow-y-auto">
                 {api.routes.map((route) => (
-                  <div key={route.id} className="border rounded p-2 text-xs">
+                  <div key={route.id} className="border rounded p-2 text-xs space-y-1">
                     <p className="font-mono">
                       <Badge variant="outline" className="mr-2">
                         {route.method}
@@ -173,7 +173,15 @@ ${mockResponse.tool_calls
                       {route.path}
                     </p>
                     {route.description && (
-                      <p className="text-muted-foreground mt-1">{route.description}</p>
+                      <p className="text-muted-foreground">{route.description}</p>
+                    )}
+                    {route.body && ['POST', 'PUT', 'PATCH', 'DELETE'].includes(route.method) && (
+                      <div className="mt-2 pt-2 border-t">
+                        <p className="text-muted-foreground mb-1">Request Body:</p>
+                        <pre className="bg-muted p-2 rounded text-xs overflow-x-auto">
+                          {route.body}
+                        </pre>
+                      </div>
                     )}
                   </div>
                 ))}
