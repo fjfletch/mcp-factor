@@ -24,27 +24,41 @@ export default function BuilderV6Page() {
   // Load data from backend on mount (with graceful fallback)
   useEffect(() => {
     const loadData = async () => {
-      try {
-        await loadAllFromBackend();
-        console.log('✅ Successfully loaded data from backend');
+      // TEMPORARY: Backend loading disabled due to HTTPS/HTTP mixed content
+      // The preview URL uses HTTPS but backend is HTTP, which browsers block
+      // Enable this once backend has HTTPS or when accessing via localhost
+      
+      const ENABLE_BACKEND = false; // Set to true when backend has HTTPS
+      
+      if (ENABLE_BACKEND) {
+        try {
+          await loadAllFromBackend();
+          console.log('✅ Successfully loaded data from backend');
+          toast({
+            title: 'Connected',
+            description: 'Data loaded from backend',
+          });
+        } catch (error) {
+          console.warn('⚠️ Backend unavailable, using local data:', error);
+          toast({
+            title: 'Offline Mode',
+            description: 'Using local data (backend unavailable)',
+            variant: 'default'
+          });
+        }
+      } else {
+        console.log('📦 Using local data (backend disabled - requires HTTPS)');
         toast({
-          title: 'Connected',
-          description: 'Data loaded from backend',
-        });
-      } catch (error) {
-        console.warn('⚠️ Backend unavailable, using local data:', error);
-        // Gracefully fall back to local/mock data
-        toast({
-          title: 'Offline Mode',
-          description: 'Using local data (backend unavailable)',
+          title: 'Local Mode',
+          description: 'Using mock data - backend requires HTTPS',
           variant: 'default'
         });
-      } finally {
-        // Show loading screen for minimum duration
-        setTimeout(() => {
-          setIsLoading(false);
-        }, 1500);
       }
+      
+      // Show loading screen for minimum duration
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 1500);
     };
     
     loadData();
