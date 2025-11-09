@@ -30,6 +30,7 @@ export default function FlowCanvas() {
   const reactFlowWrapper = useRef<HTMLDivElement>(null);
   const [reactFlowInstance, setReactFlowInstance] = React.useState<any>(null);
 
+  // Initialize flow only when currentMCP changes (not when llmNodes changes)
   useEffect(() => {
     if (!currentMCP) {
       setNodes([]);
@@ -37,80 +38,106 @@ export default function FlowCanvas() {
       return;
     }
 
-    const newNodes: Node[] = [];
-    const newEdges: Edge[] = [];
+    // Only initialize if nodes are empty (first load)
+    if (nodes.length === 0) {
+      const newNodes: Node[] = [];
+      const newEdges: Edge[] = [];
 
-    // Input node
-    newNodes.push({
-      id: 'input',
-      type: 'input',
-      position: { x: 250, y: 50 },
-      data: { label: '🎤 User Query' },
-      style: { 
-        backgroundColor: '#f0f9ff', 
-        border: '2px solid #0ea5e9',
-        borderRadius: '8px',
-        padding: '12px',
-        fontWeight: 500,
-      },
-      draggable: true,
-    });
+      // Input node
+      newNodes.push({
+        id: 'input',
+        type: 'input',
+        position: { x: 250, y: 50 },
+        data: { label: '🎤 User Query' },
+        style: { 
+          backgroundColor: '#f0f9ff', 
+          border: '2px solid #0ea5e9',
+          borderRadius: '8px',
+          padding: '12px',
+          fontWeight: 500,
+        },
+        draggable: true,
+      });
 
-    // LLM node - get config from store
-    const llmConfig = llmNodes['llm'] || { mode: 'normal' };
-    const llmModeLabel = llmConfig.mode === 'mcp' ? '🔧 MCP Tool Calling' : '💬 Normal Prompt';
-    newNodes.push({
-      id: 'llm',
-      position: { x: 220, y: 150 },
-      data: {
-        label: `🤖 LLM Decision\n${llmModeLabel}`,
-        mode: llmConfig.mode,
-      },
-      style: { 
-        backgroundColor: '#e0f2fe', 
-        border: '2px solid #0284c7',
-        borderRadius: '8px',
-        padding: '12px',
-        fontWeight: 500,
-      },
-      draggable: true,
-    });
+      // LLM node - get config from store
+      const llmConfig = llmNodes['llm'] || { mode: 'normal' };
+      const llmModeLabel = llmConfig.mode === 'mcp' ? '🔧 MCP Tool Calling' : '💬 Normal Prompt';
+      newNodes.push({
+        id: 'llm',
+        position: { x: 220, y: 150 },
+        data: {
+          label: `🤖 LLM Decision\n${llmModeLabel}`,
+          mode: llmConfig.mode,
+        },
+        style: { 
+          backgroundColor: '#e0f2fe', 
+          border: '2px solid #0284c7',
+          borderRadius: '8px',
+          padding: '12px',
+          fontWeight: 500,
+        },
+        draggable: true,
+      });
 
-    // Edge from input to LLM
-    newEdges.push({
-      id: 'input-llm',
-      source: 'input',
-      target: 'llm',
-      animated: true,
-    });
+      // Edge from input to LLM
+      newEdges.push({
+        id: 'input-llm',
+        source: 'input',
+        target: 'llm',
+        animated: true,
+      });
 
-    // Output node
-    newNodes.push({
-      id: 'output',
-      type: 'output',
-      position: { x: 250, y: 580 },
-      data: { label: '💬 Response to User' },
-      style: { 
-        backgroundColor: '#f0fdf4', 
-        border: '2px solid #22c55e',
-        borderRadius: '8px',
-        padding: '12px',
-        fontWeight: 500,
-      },
-      draggable: true,
-    });
+      // Output node
+      newNodes.push({
+        id: 'output',
+        type: 'output',
+        position: { x: 250, y: 580 },
+        data: { label: '💬 Response to User' },
+        style: { 
+          backgroundColor: '#f0fdf4', 
+          border: '2px solid #22c55e',
+          borderRadius: '8px',
+          padding: '12px',
+          fontWeight: 500,
+        },
+        draggable: true,
+      });
 
-    // Connect LLM directly to output (tools attach as side connections)
-    newEdges.push({
-      id: 'llm-output',
-      source: 'llm',
-      target: 'output',
-      animated: true,
-    });
+      // Connect LLM directly to output (tools attach as side connections)
+      newEdges.push({
+        id: 'llm-output',
+        source: 'llm',
+        target: 'output',
+        animated: true,
+      });
 
-    setNodes(newNodes);
-    setEdges(newEdges);
-  }, [currentMCP, llmNodes, setNodes, setEdges]);
+      setNodes(newNodes);
+      setEdges(newEdges);
+    }
+  }, [currentMCP]);
+
+  // Separate effect to update LLM node label when mode changes (without resetting the flow)
+  useEffect(() => {
+    if (nodes.length > 0) {
+      setNodes((nds) =>
+        nds.map((node) => {
+          if (node.id === 'llm') {
+            const llmConfig = llmNodes['llm'] || { mode: 'normal' };
+            const llmModeLabel = llmConfig.mode === 'mcp' ? '🔧 MCP Tool Calling' : '💬 Normal Prompt';
+            return {
+              ...node,
+              data: {
+                ...node.data,
+                label: `🤖 LLM Decision\n${llmModeLabel}`,
+                mode: llmConfig.mode,
+              },
+            };
+          }
+          return node;
+        })
+      );
+    }
+  }, [llmNodes]);
 
   const handleNodeClick = (event: React.MouseEvent, node: Node) => {
     selectNode({
