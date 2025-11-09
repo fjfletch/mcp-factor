@@ -99,30 +99,9 @@ export default function About() {
             <h1 className="text-6xl md:text-7xl font-bold mb-6" style={{ color: '#033F63' }}>
               About Piraeus
             </h1>
-            <p className="text-xl md:text-2xl mb-10 max-w-3xl mx-auto" style={{ color: '#28666E' }}>
+            <p className="text-xl md:text-2xl max-w-3xl mx-auto" style={{ color: '#28666E' }}>
               We're on a mission to democratize AI integration. Piraeus makes it possible for anyone to connect APIs to LLMs, regardless of technical expertise.
             </p>
-            <div className="flex gap-4 justify-center flex-wrap">
-              <Link href="/builder/new">
-                <Button size="lg" className="text-lg px-10 py-6 shadow-xl hover:shadow-2xl transition-shadow" style={{ backgroundColor: '#033F63' }}>
-                  Get Started
-                </Button>
-              </Link>
-              <Link href="/docs">
-                <Button 
-                  size="lg" 
-                  variant="outline" 
-                  className="text-lg px-10 py-6 shadow-xl hover:shadow-2xl transition-shadow border-2 backdrop-blur-sm"
-                  style={{ 
-                    borderColor: '#28666E',
-                    color: '#033F63',
-                    backgroundColor: 'rgba(255, 255, 255, 0.6)'
-                  }}
-                >
-                  Read the Docs
-                </Button>
-              </Link>
-            </div>
           </div>
         </motion.div>
       </section>
