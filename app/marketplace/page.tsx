@@ -113,8 +113,8 @@ export default function Marketplace() {
         {/* MCP Grid */}
         {filteredMCPs.length === 0 ? (
           <div className="col-span-full text-center py-20">
-            <h2 className="text-xl font-semibold mb-2">No MCPs found</h2>
-            <p className="text-muted-foreground">Try adjusting your search or filters</p>
+            <h2 className="text-xl font-semibold mb-2 text-white">No MCPs found</h2>
+            <p className="text-white/80">Try adjusting your search or filters</p>
           </div>
         ) : (
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
