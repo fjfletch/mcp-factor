@@ -9,6 +9,7 @@ interface MCPStoreState {
   flowNodes: FlowNode[]; // Manually created flow nodes
   flowEdges: FlowEdge[]; // Manually created flow edges
   selectedNode: FlowNode | null;
+  selectedEdge: FlowEdge | null;
   llmNodes: Record<string, any>; // Store individual LLM node configs
   setCurrentMCP: (mcp: MCPIntegration | null) => void;
   updateMCP: (updates: Partial<MCPIntegration>) => void;
