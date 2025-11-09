@@ -135,7 +135,7 @@ export default function MyMCPs() {
         ) : (
           <div className="grid grid-cols-1 gap-4">
             {filteredMCPs.map((mcp) => (
-              <Card key={mcp.id} className="hover:shadow-md transition-shadow">
+              <Card key={mcp.id} className="hover:shadow-md transition-shadow bg-white/90 backdrop-blur-sm border-white/30">
                 <CardHeader>
                   <div className="flex items-start justify-between">
                     <div className="flex-1">
