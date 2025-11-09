@@ -100,7 +100,7 @@ export default function About() {
               About Piraeus
             </h1>
             <p className="text-xl md:text-2xl max-w-3xl mx-auto" style={{ color: '#28666E' }}>
-              We're on a mission to democratize AI integration. Piraeus makes it possible for anyone to connect APIs to LLMs, regardless of technical expertise.
+              Piraeus is the historic port city of Athens, known since ancient Greece as a major hub of trade, connection, and exchange where countless routes, goods, and ideas converged. Here, we embody the same spirit of connectivity: a dynamic port where APIs, LLMs, and users meet, exchange data, and build powerful integrations across a vast digital network.
             </p>
           </div>
         </motion.div>
