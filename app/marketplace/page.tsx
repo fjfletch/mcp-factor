@@ -71,9 +71,22 @@ export default function Marketplace() {
           <p className="text-white/80 mt-1">Browse and download other user's MCPs</p>
         </div>
 
-        {/* Search Bar */}
-        <div className="mb-6">
-          <div className="relative max-w-2xl">
+        {/* Search Bar with Sort */}
+        <div className="mb-6 flex gap-4 items-center">
+          {/* Sort Options */}
+          <select
+            className="h-10 rounded-md border border-white/30 bg-white/90 backdrop-blur-sm px-3 text-sm"
+            value={sortBy}
+            onChange={(e) => setSortBy(e.target.value)}
+          >
+            <option value="popular">Most Popular</option>
+            <option value="newest">Newest</option>
+            <option value="rating">Top Rated</option>
+            <option value="uses">Most Used</option>
+          </select>
+
+          {/* Search Bar */}
+          <div className="relative flex-1 max-w-2xl">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
             <Input
               type="search"
@@ -86,7 +99,7 @@ export default function Marketplace() {
         </div>
 
         {/* Category Filters */}
-        <div className="flex gap-2 mb-4 flex-wrap">
+        <div className="flex gap-2 mb-6 flex-wrap">
           {categories.map((category) => (
             <Button
               key={category}
@@ -97,20 +110,6 @@ export default function Marketplace() {
               {category}
             </Button>
           ))}
-        </div>
-
-        {/* Sort Options */}
-        <div className="mb-6">
-          <select
-            className="h-9 rounded-md border border-white/30 bg-white/90 backdrop-blur-sm px-3 text-sm"
-            value={sortBy}
-            onChange={(e) => setSortBy(e.target.value)}
-          >
-            <option value="popular">Most Popular</option>
-            <option value="newest">Newest</option>
-            <option value="rating">Top Rated</option>
-            <option value="uses">Most Used</option>
-          </select>
         </div>
 
         {/* MCP Grid */}
