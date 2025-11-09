@@ -8,7 +8,6 @@ import { Save, Play, Rocket, Loader2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { useToast } from '@/components/ui/use-toast';
-import BuilderSidebar from '@/components/builder/BuilderSidebar';
 import FlowCanvas from '@/components/builder/FlowCanvas';
 import PropertiesPanel from '@/components/builder/PropertiesPanel';
 
