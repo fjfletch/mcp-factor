@@ -223,13 +223,15 @@ export namespace WorkflowTab {
                     />
                   )}
 
-                  {/* Add Step Drop Zone */}
-                  <div className="py-2">
-                    <AddStepDropZone
-                      onDrop={(e) => handleDrop(e, step.id)}
-                      afterStepId={step.id}
-                    />
-                  </div>
+                  {/* Add Step Drop Zone - Only show after the last step */}
+                  {index === workflowSteps.length - 1 && (
+                    <div className="py-2 mt-4">
+                      <AddStepDropZone
+                        onDrop={(e) => handleDrop(e, step.id)}
+                        afterStepId={step.id}
+                      />
+                    </div>
+                  )}
                 </div>
               ))}
             </>
