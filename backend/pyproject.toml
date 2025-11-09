@@ -18,6 +18,8 @@ dependencies = [
     "pydantic-settings>=2.11.0",
     "pytest-httpx>=0.35.0",
     "uvicorn>=0.38.0",
+    "mcp>=1.21.0",
+    "fastmcp>=2.13.0.2",
 ]
 
 [project.optional-dependencies]
@@ -32,6 +34,7 @@ packages = ["src/dynamic_tools"]
 
 [tool.uv]
 dev-dependencies = [
+    "mcp[inspector]>=1.21.0",
     "pytest>=7.0",
     "pytest-asyncio>=0.21",
     "pytest-cov>=4.0",
