@@ -115,25 +115,21 @@ export default function About() {
           viewport={{ once: true }}
           className="container mx-auto max-w-5xl"
         >
-          <Card className="backdrop-blur-xl bg-white/20 border-2 border-white/30 shadow-2xl" style={{ borderColor: 'rgba(124, 152, 133, 0.2)' }}>
-            <CardHeader className="text-center pb-8">
-              <div className="w-20 h-20 rounded-2xl flex items-center justify-center mb-6 mx-auto backdrop-blur-sm" style={{ backgroundColor: 'rgba(254, 220, 151, 0.5)', border: '2px solid rgba(254, 220, 151, 0.3)' }}>
-                <Target className="w-10 h-10" style={{ color: '#033F63' }} />
-              </div>
-              <CardTitle className="text-5xl mb-4">
-                <span style={{ color: '#033F63' }}>Our </span>
-                <span style={{ color: '#7C9885' }}>Mission</span>
-              </CardTitle>
-              <CardDescription className="text-lg" style={{ color: '#28666E' }}>
-                Empowering developers and businesses to build the future of AI
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <p className="text-lg leading-relaxed text-center max-w-3xl mx-auto" style={{ color: '#033F63' }}>
-                At Piraeus, we believe that AI integration shouldn't be a barrier. Whether you're a startup building your first AI feature or an enterprise scaling AI across your organization, we provide the tools and platform to make it happen. Our visual builder removes the complexity, while our robust API and marketplace ecosystem ensures you have everything you need to succeed.
-              </p>
-            </CardContent>
-          </Card>
+          <div className="backdrop-blur-lg bg-white/15 border border-white/25 rounded-3xl p-12 shadow-2xl">
+            <div className="w-20 h-20 rounded-2xl flex items-center justify-center mb-6 mx-auto backdrop-blur-sm" style={{ backgroundColor: 'rgba(254, 220, 151, 0.5)', border: '2px solid rgba(254, 220, 151, 0.3)' }}>
+              <Target className="w-10 h-10" style={{ color: '#033F63' }} />
+            </div>
+            <h2 className="text-5xl font-bold mb-4 text-center">
+              <span style={{ color: '#033F63' }}>Our </span>
+              <span style={{ color: '#7C9885' }}>Mission</span>
+            </h2>
+            <p className="text-lg mb-8 text-center" style={{ color: '#28666E' }}>
+              Empowering developers and businesses to build the future of AI
+            </p>
+            <p className="text-lg leading-relaxed text-center max-w-3xl mx-auto" style={{ color: '#033F63' }}>
+              At Piraeus, we believe that AI integration shouldn't be a barrier. Whether you're a startup building your first AI feature or an enterprise scaling AI across your organization, we provide the tools and platform to make it happen. Our visual builder removes the complexity, while our robust API and marketplace ecosystem ensures you have everything you need to succeed.
+            </p>
+          </div>
         </motion.div>
       </section>
 
