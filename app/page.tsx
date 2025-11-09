@@ -134,10 +134,11 @@ export default function Home() {
                   <Badge 
                     key={index} 
                     variant="secondary" 
-                    className="text-base px-6 py-2"
+                    className="text-base px-6 py-2 backdrop-blur-md border border-white/30"
                     style={{ 
-                      backgroundColor: '#B5B682',
-                      color: '#033F63'
+                      backgroundColor: 'rgba(181, 182, 130, 0.7)',
+                      color: '#033F63',
+                      fontWeight: '600'
                     }}
                   >
                     {tech}
