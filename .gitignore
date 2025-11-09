@@ -81,3 +81,7 @@ Thumbs.db
 *.tmp
 *.temp
 .cache/
+-e 
+# Environment files
+*.env
+*.env.*
