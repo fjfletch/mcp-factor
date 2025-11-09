@@ -97,15 +97,13 @@ export default function FlowCanvas() {
       draggable: true,
     });
 
-    // If no tools, connect LLM directly to output
-    if (currentMCP.tools.length === 0) {
-      newEdges.push({
-        id: 'llm-output',
-        source: 'llm',
-        target: 'output',
-        animated: true,
-      });
-    }
+    // Connect LLM directly to output (tools attach as side connections)
+    newEdges.push({
+      id: 'llm-output',
+      source: 'llm',
+      target: 'output',
+      animated: true,
+    });
 
     setNodes(newNodes);
     setEdges(newEdges);
