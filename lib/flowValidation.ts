@@ -28,7 +28,7 @@ export function getConnectionErrorMessage(sourceType: string, targetType: string
     return '';
   }
   
-  const allowed = CONNECTION_RULES.allowed[sourceType as keyof typeof CONNECTION_RULES.allowed] || [];
+  const allowed = CONNECTION_RULES[sourceType] || [];
   
   if (allowed.length === 0) {
     return `${sourceType} nodes cannot have outgoing connections`;
