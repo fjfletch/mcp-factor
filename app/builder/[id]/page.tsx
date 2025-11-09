@@ -19,7 +19,6 @@ export default function BuilderPage() {
   const { currentMCP, setCurrentMCP, updateMCP } = useMCPStore();
   
   const [mcpName, setMcpName] = useState('');
-  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const [isSaving, setIsSaving] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 
