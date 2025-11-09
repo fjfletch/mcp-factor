@@ -8,6 +8,7 @@ import { Input } from "@/components/ui/input";
 import { Search, Star } from "lucide-react";
 import { mockMCPs } from "@/lib/mock-data";
 import { useToast } from "@/hooks/use-toast";
+import { MCPDetailModal } from "@/components/modals/MCPDetailModal";
 
 export default function Marketplace() {
   const { toast } = useToast();
