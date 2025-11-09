@@ -322,7 +322,7 @@ export default function BuilderSidebar() {
                   }}
                 >
                   <div className="flex items-center gap-2">
-                    <Tool className="h-4 w-4" />
+                    <Wrench className="h-4 w-4" />
                     <div>
                       <p className="font-medium text-sm">{tool.displayName}</p>
                       <p className="text-xs text-muted-foreground">
