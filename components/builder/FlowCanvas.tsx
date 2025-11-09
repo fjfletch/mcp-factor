@@ -191,7 +191,7 @@ export default function FlowCanvas() {
       }
       
       // Check for duplicate connection
-      if (connectionExists(params.source, params.target, edges)) {
+      if (connectionExists(params.source, params.target, edges as any)) {
         toast({
           title: "Duplicate Connection",
           description: "A connection between these nodes already exists. Click the existing connection to edit it.",
