@@ -1,9 +1,11 @@
+// Type Definitions for MCP Builder
+
 export interface MCPIntegration {
   id: string;
   name: string;
   description: string;
   version: string;
-  format: string;
+  format: 'gpt-4' | 'claude' | 'generic';
   author: string;
   createdAt: string;
   updatedAt: string;
@@ -13,24 +15,22 @@ export interface MCPIntegration {
   prompts: MCPPrompt[];
   resources: MCPResource[];
   configuration: MCPConfiguration;
-  stars?: number;
-  reviews?: number;
-  uses?: number;
-  emoji?: string;
 }
 
 export interface APIConfig {
   id: string;
   name: string;
   baseUrl: string;
-  authentication: {
-    type: 'none' | 'api-key' | 'bearer' | 'oauth2' | 'basic' | 'custom';
-    config?: Record<string, any>;
-  };
+  authentication: AuthConfig;
+  headers: Record<string, string>;
+  timeout: number;
   routes: APIRoute[];
-  headers?: Record<string, string>;
-  timeout?: number;
-  status?: 'connected' | 'error' | 'no-key';
+  status: 'connected' | 'disconnected' | 'error';
+}
+
+export interface AuthConfig {
+  type: 'none' | 'api-key' | 'bearer' | 'oauth2' | 'basic' | 'custom';
+  config?: Record<string, any>;
 }
 
 export interface APIRoute {
@@ -48,24 +48,36 @@ export interface MCPTool {
   apiId: string;
   method: string;
   endpoint: string;
-  inputSchema: Record<string, any>;
-  responseMapping?: {
-    successPath?: string;
-    errorHandling?: string;
-  };
+  inputSchema: JSONSchema;
+  responseHandling: ResponseHandling;
+  errorGuidance: string;
+}
+
+export interface JSONSchema {
+  type: string;
+  properties?: Record<string, any>;
+  required?: string[];
+  [key: string]: any;
+}
+
+export interface ResponseHandling {
+  successPath: string;
+  errorHandling: Record<number, string>;
 }
 
 export interface MCPPrompt {
   id: string;
   type: 'system' | 'contextual';
+  trigger?: string;
   content: string;
 }
 
 export interface MCPResource {
   id: string;
   name: string;
-  type: string;
+  type: 'documentation' | 'database' | 'file';
   uri: string;
+  description: string;
 }
 
 export interface MCPConfiguration {
@@ -77,13 +89,9 @@ export interface MCPConfiguration {
 
 export interface FlowNode {
   id: string;
-  type: string;
+  type: 'llm' | 'tool' | 'api' | 'condition' | 'prompt' | 'resource' | 'input' | 'output';
   position: { x: number; y: number };
-  data: {
-    label: string;
-    type?: string;
-    details?: any;
-  };
+  data: any;
 }
 
 export interface FlowEdge {
@@ -91,23 +99,4 @@ export interface FlowEdge {
   source: string;
   target: string;
   type?: string;
-}
-
-export interface TestResult {
-  success: boolean;
-  response?: string;
-  executionFlow?: ExecutionStep[];
-  tokenUsage?: {
-    prompt: number;
-    completion: number;
-    total: number;
-  };
-  cost?: number;
-  error?: string;
-}
-
-export interface ExecutionStep {
-  step: number;
-  action: string;
-  details: string;
 }

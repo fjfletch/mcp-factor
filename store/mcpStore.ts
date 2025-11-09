@@ -1,115 +1,112 @@
 import { create } from 'zustand';
-import { MCPIntegration, APIConfig, MCPTool, MCPPrompt, FlowNode } from '@/types/mcp';
+import { MCPIntegration, APIConfig, MCPTool, FlowNode, FlowEdge } from '@/types/mcp';
 
-interface MCPStore {
+interface MCPStoreState {
   currentMCP: MCPIntegration | null;
+  nodes: FlowNode[];
+  edges: FlowEdge[];
   selectedNode: FlowNode | null;
-  
   setCurrentMCP: (mcp: MCPIntegration | null) => void;
   updateMCP: (updates: Partial<MCPIntegration>) => void;
-  
+  setNodes: (nodes: FlowNode[]) => void;
+  setEdges: (edges: FlowEdge[]) => void;
   addAPI: (api: APIConfig) => void;
-  updateAPI: (id: string, updates: Partial<APIConfig>) => void;
-  deleteAPI: (id: string) => void;
-  
+  updateAPI: (apiId: string, updates: Partial<APIConfig>) => void;
+  removeAPI: (apiId: string) => void;
   addTool: (tool: MCPTool) => void;
-  updateTool: (id: string, updates: Partial<MCPTool>) => void;
-  deleteTool: (id: string) => void;
-  
-  addPrompt: (prompt: MCPPrompt) => void;
-  updatePrompt: (id: string, updates: Partial<MCPPrompt>) => void;
-  deletePrompt: (id: string) => void;
-  
+  updateTool: (toolId: string, updates: Partial<MCPTool>) => void;
+  removeTool: (toolId: string) => void;
   selectNode: (node: FlowNode | null) => void;
 }
 
-export const useMCPStore = create<MCPStore>((set) => ({
+export const useMCPStore = create<MCPStoreState>((set) => ({
   currentMCP: null,
+  nodes: [],
+  edges: [],
   selectedNode: null,
-  
-  setCurrentMCP: (mcp) => set({ currentMCP: mcp, selectedNode: null }),
-  
-  updateMCP: (updates) => set((state) => ({
-    currentMCP: state.currentMCP ? { ...state.currentMCP, ...updates } : null,
-  })),
-  
-  addAPI: (api) => set((state) => ({
-    currentMCP: state.currentMCP
-      ? { ...state.currentMCP, apis: [...state.currentMCP.apis, api] }
-      : null,
-  })),
-  
-  updateAPI: (id, updates) => set((state) => ({
-    currentMCP: state.currentMCP
-      ? {
-          ...state.currentMCP,
-          apis: state.currentMCP.apis.map((api) =>
-            api.id === id ? { ...api, ...updates } : api
-          ),
-        }
-      : null,
-  })),
-  
-  deleteAPI: (id) => set((state) => ({
-    currentMCP: state.currentMCP
-      ? {
-          ...state.currentMCP,
-          apis: state.currentMCP.apis.filter((api) => api.id !== id),
-        }
-      : null,
-  })),
-  
-  addTool: (tool) => set((state) => ({
-    currentMCP: state.currentMCP
-      ? { ...state.currentMCP, tools: [...state.currentMCP.tools, tool] }
-      : null,
-  })),
-  
-  updateTool: (id, updates) => set((state) => ({
-    currentMCP: state.currentMCP
-      ? {
-          ...state.currentMCP,
-          tools: state.currentMCP.tools.map((tool) =>
-            tool.id === id ? { ...tool, ...updates } : tool
-          ),
-        }
-      : null,
-  })),
-  
-  deleteTool: (id) => set((state) => ({
-    currentMCP: state.currentMCP
-      ? {
-          ...state.currentMCP,
-          tools: state.currentMCP.tools.filter((tool) => tool.id !== id),
-        }
-      : null,
-  })),
-  
-  addPrompt: (prompt) => set((state) => ({
-    currentMCP: state.currentMCP
-      ? { ...state.currentMCP, prompts: [...state.currentMCP.prompts, prompt] }
-      : null,
-  })),
-  
-  updatePrompt: (id, updates) => set((state) => ({
-    currentMCP: state.currentMCP
-      ? {
-          ...state.currentMCP,
-          prompts: state.currentMCP.prompts.map((prompt) =>
-            prompt.id === id ? { ...prompt, ...updates } : prompt
-          ),
-        }
-      : null,
-  })),
-  
-  deletePrompt: (id) => set((state) => ({
-    currentMCP: state.currentMCP
-      ? {
-          ...state.currentMCP,
-          prompts: state.currentMCP.prompts.filter((prompt) => prompt.id !== id),
-        }
-      : null,
-  })),
-  
+
+  setCurrentMCP: (mcp) => set({ currentMCP: mcp }),
+
+  updateMCP: (updates) =>
+    set((state) => ({
+      currentMCP: state.currentMCP
+        ? { ...state.currentMCP, ...updates, updatedAt: new Date().toISOString() }
+        : null,
+    })),
+
+  setNodes: (nodes) => set({ nodes }),
+
+  setEdges: (edges) => set({ edges }),
+
+  addAPI: (api) =>
+    set((state) => ({
+      currentMCP: state.currentMCP
+        ? {
+            ...state.currentMCP,
+            apis: [...state.currentMCP.apis, api],
+            updatedAt: new Date().toISOString(),
+          }
+        : null,
+    })),
+
+  updateAPI: (apiId, updates) =>
+    set((state) => ({
+      currentMCP: state.currentMCP
+        ? {
+            ...state.currentMCP,
+            apis: state.currentMCP.apis.map((api) =>
+              api.id === apiId ? { ...api, ...updates } : api
+            ),
+            updatedAt: new Date().toISOString(),
+          }
+        : null,
+    })),
+
+  removeAPI: (apiId) =>
+    set((state) => ({
+      currentMCP: state.currentMCP
+        ? {
+            ...state.currentMCP,
+            apis: state.currentMCP.apis.filter((api) => api.id !== apiId),
+            updatedAt: new Date().toISOString(),
+          }
+        : null,
+    })),
+
+  addTool: (tool) =>
+    set((state) => ({
+      currentMCP: state.currentMCP
+        ? {
+            ...state.currentMCP,
+            tools: [...state.currentMCP.tools, tool],
+            updatedAt: new Date().toISOString(),
+          }
+        : null,
+    })),
+
+  updateTool: (toolId, updates) =>
+    set((state) => ({
+      currentMCP: state.currentMCP
+        ? {
+            ...state.currentMCP,
+            tools: state.currentMCP.tools.map((tool) =>
+              tool.id === toolId ? { ...tool, ...updates } : tool
+            ),
+            updatedAt: new Date().toISOString(),
+          }
+        : null,
+    })),
+
+  removeTool: (toolId) =>
+    set((state) => ({
+      currentMCP: state.currentMCP
+        ? {
+            ...state.currentMCP,
+            tools: state.currentMCP.tools.filter((tool) => tool.id !== toolId),
+            updatedAt: new Date().toISOString(),
+          }
+        : null,
+    })),
+
   selectNode: (node) => set({ selectedNode: node }),
 }));
