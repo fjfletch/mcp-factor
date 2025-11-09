@@ -90,18 +90,24 @@ export interface MCPConfiguration {
 
 export interface FlowNode {
   id: string;
-  type: 'llm' | 'tool' | 'api' | 'condition' | 'prompt' | 'resource' | 'input' | 'output';
+  type: 'query' | 'llm' | 'tool' | 'response' | 'condition';
   position: { x: number; y: number };
-  data: any;
-}
-
-export interface LLMNodeConfig {
-  id: string;
-  mode: 'normal' | 'mcp';
-  model: string;
-  temperature: number;
-  maxTokens: number;
-  systemPrompt?: string;
+  data: {
+    label: string;
+    // For query nodes
+    queryText?: string;
+    // For LLM nodes
+    llmId?: string;
+    model?: string;
+    temperature?: number;
+    maxTokens?: number;
+    systemPrompt?: string;
+    availableToolIds?: string[];
+    // For tool nodes
+    toolId?: string;
+    // For response nodes
+    responseText?: string;
+  };
 }
 
 export interface FlowEdge {
@@ -109,4 +115,9 @@ export interface FlowEdge {
   source: string;
   target: string;
   type?: string;
+}
+
+export interface FlowConfiguration {
+  nodes: FlowNode[];
+  edges: FlowEdge[];
 }
