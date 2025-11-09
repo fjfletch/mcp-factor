@@ -15,6 +15,8 @@ export default function Marketplace() {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [sortBy, setSortBy] = useState("popular");
+  const [selectedMCPId, setSelectedMCPId] = useState<string | null>(null);
+  const [isDetailModalOpen, setIsDetailModalOpen] = useState(false);
 
   const categories = ["All", "E-commerce", "Travel", "Gaming", "Finance", "Communication", "DevOps"];
 
