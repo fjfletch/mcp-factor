@@ -19,7 +19,7 @@ import ResponseNodeProperties from './ResponseNodeProperties';
 import EdgeProperties from './EdgeProperties';
 
 export default function PropertiesPanel() {
-  const { currentMCP, selectedNode, updateMCP, removeAPI, removeTool, updateAPI, updateTool, selectNode, updateLLMNode, getLLMNode } = useMCPStore();
+  const { currentMCP, selectedNode, selectedEdge, updateMCP, removeAPI, removeTool, updateAPI, updateTool, selectNode, updateLLMNode, getLLMNode } = useMCPStore();
   const { toast } = useToast();
   const [testQuery, setTestQuery] = useState('');
   const [testResult, setTestResult] = useState('');
