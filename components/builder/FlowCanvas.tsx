@@ -73,17 +73,12 @@ export default function FlowCanvas() {
       const llmModeLabel = llmConfig.mode === 'mcp' ? '🔧 MCP Tool Calling' : '💬 Normal Prompt';
       newNodes.push({
         id: 'llm',
+        type: 'llmNode',
         position: { x: 220, y: 150 },
         data: {
           label: `🤖 LLM Decision\n${llmModeLabel}`,
           mode: llmConfig.mode,
-        },
-        style: { 
-          backgroundColor: '#e0f2fe', 
-          border: '2px solid #0284c7',
-          borderRadius: '8px',
-          padding: '12px',
-          fontWeight: 500,
+          availableToolIds: llmConfig.availableToolIds || [],
         },
         draggable: true,
       });
