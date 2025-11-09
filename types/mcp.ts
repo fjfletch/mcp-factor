@@ -95,6 +95,15 @@ export interface FlowNode {
   data: any;
 }
 
+export interface LLMNodeConfig {
+  id: string;
+  mode: 'normal' | 'mcp';
+  model: string;
+  temperature: number;
+  maxTokens: number;
+  systemPrompt?: string;
+}
+
 export interface FlowEdge {
   id: string;
   source: string;
