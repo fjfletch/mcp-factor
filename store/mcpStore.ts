@@ -46,6 +46,7 @@ export const useMCPStore = create<MCPStoreState>((set, get) => ({
   flowNodes: [],
   flowEdges: [],
   selectedNode: null,
+  selectedEdge: null,
   llmNodes: {},
 
   setCurrentMCP: (mcp) => {
