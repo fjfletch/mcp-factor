@@ -48,28 +48,67 @@ export default function Home() {
       <Navigation />
 
       {/* Hero Section */}
-      <section className="py-24 px-4">
-        <div className="container mx-auto max-w-5xl text-center">
-          <h1 className="text-5xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-primary via-secondary to-accent bg-clip-text text-transparent">
+      <section className="relative py-24 px-4 overflow-hidden" style={{ backgroundColor: '#28666E' }}>
+        {/* Ocean waves animation */}
+        <div className="absolute inset-0 opacity-30">
+          <svg className="absolute bottom-0 w-full" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
+            <path fill="#1a4d52" fillOpacity="0.5" d="M0,96L48,112C96,128,192,160,288,160C384,160,480,128,576,133.3C672,139,768,181,864,181.3C960,181,1056,139,1152,128C1248,117,1344,139,1392,149.3L1440,160L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z">
+              <animate attributeName="d" dur="10s" repeatCount="indefinite"
+                values="M0,96L48,112C96,128,192,160,288,160C384,160,480,128,576,133.3C672,139,768,181,864,181.3C960,181,1056,139,1152,128C1248,117,1344,139,1392,149.3L1440,160L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z;
+                        M0,160L48,149.3C96,139,192,117,288,128C384,139,480,181,576,181.3C672,181,768,139,864,133.3C960,128,1056,160,1152,160C1248,160,1344,128,1392,112L1440,96L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z;
+                        M0,96L48,112C96,128,192,160,288,160C384,160,480,128,576,133.3C672,139,768,181,864,181.3C960,181,1056,139,1152,128C1248,117,1344,139,1392,149.3L1440,160L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z" />
+            </path>
+          </svg>
+        </div>
+
+        {/* Boat animation */}
+        <div className="absolute bottom-8 right-8 md:right-16" style={{ animation: 'float 6s ease-in-out infinite' }}>
+          <svg width="80" height="80" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+            {/* Boat hull */}
+            <path d="M20,70 L80,70 L75,85 L25,85 Z" fill="#8B4513" stroke="#654321" strokeWidth="2"/>
+            {/* Boat deck */}
+            <rect x="30" y="60" width="40" height="10" fill="#A0522D" stroke="#654321" strokeWidth="1.5"/>
+            {/* Mast */}
+            <line x1="50" y1="60" x2="50" y2="20" stroke="#654321" strokeWidth="3"/>
+            {/* Sail */}
+            <path d="M50,25 L70,40 L50,55 Z" fill="#FEDC97" stroke="#B5B682" strokeWidth="1.5" opacity="0.9"/>
+            {/* Flag */}
+            <path d="M50,20 L60,23 L50,26 Z" fill="#033f63"/>
+          </svg>
+        </div>
+
+        <div className="container mx-auto max-w-5xl text-center relative z-10">
+          <h1 className="text-5xl md:text-6xl font-bold mb-6 text-white drop-shadow-lg">
             Connect Any API to Any LLM
           </h1>
-          <p className="text-xl text-muted-foreground mb-8 max-w-3xl mx-auto">
+          <p className="text-xl text-white/90 mb-8 max-w-3xl mx-auto drop-shadow">
             Build powerful AI integrations visually. No code required. Piraeus 
             makes it easy to expose APIs as tools that LLMs can use.
           </p>
           <div className="flex gap-4 justify-center flex-wrap">
             <Link href="/builder/new">
-              <Button size="lg" className="text-base px-8">
+              <Button size="lg" className="text-base px-8 shadow-lg">
                 Create New MCP
               </Button>
             </Link>
             <Link href="/marketplace">
-              <Button size="lg" variant="outline" className="text-base px-8">
+              <Button size="lg" variant="outline" className="text-base px-8 bg-white/10 border-white/30 text-white hover:bg-white/20 shadow-lg backdrop-blur-sm">
                 Browse Marketplace
               </Button>
             </Link>
           </div>
         </div>
+
+        <style jsx>{`
+          @keyframes float {
+            0%, 100% {
+              transform: translateY(0px) rotate(-2deg);
+            }
+            50% {
+              transform: translateY(-15px) rotate(2deg);
+            }
+          }
+        `}</style>
       </section>
 
       {/* Features Section */}
