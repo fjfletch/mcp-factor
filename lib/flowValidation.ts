@@ -1,43 +1,91 @@
-import { FlowConfiguration, FlowNode, FlowEdge } from '@/types/mcp';
+import { FlowConfiguration, FlowNode, FlowEdge, MCPTool } from '@/types/mcp';
+
+/**
+ * Connection rules: defines which node types can connect to which
+ */
+export const CONNECTION_RULES = {
+  // Allowed connections: source type -> array of allowed target types
+  allowed: {
+    'query': ['llm', 'response'], // Query can connect to LLM or directly to Response
+    'llm': ['response', 'tool'],  // LLM can connect to Response or Tool
+    'tool': ['response'],          // Tool can only connect to Response
+    'response': []                 // Response has no outgoing connections (terminal)
+  },
+  
+  // Prohibited connections (for documentation)
+  prohibited: {
+    'query': ['query', 'tool'],
+    'llm': ['query', 'llm'],
+    'tool': ['query', 'llm', 'tool'],
+    'response': ['query', 'llm', 'tool', 'response']
+  }
+};
 
 /**
  * Check if a connection between two node types is allowed
  */
 export function canConnect(sourceType: string, targetType: string): boolean {
-  // Query can only connect to LLM
-  if (sourceType === 'query' && targetType === 'llm') return true;
-
-  // LLM can connect to Response or Tool
-  if (sourceType === 'llm' && (targetType === 'response' || targetType === 'tool')) return true;
-
-  // Tool can only connect to Response
-  if (sourceType === 'tool' && targetType === 'response') return true;
-
-  // Everything else is invalid
-  return false;
+  const allowedTargets = CONNECTION_RULES.allowed[sourceType as keyof typeof CONNECTION_RULES.allowed];
+  return allowedTargets ? allowedTargets.includes(targetType) : false;
 }
 
 /**
  * Get user-friendly error message for invalid connections
  */
 export function getConnectionErrorMessage(sourceType: string, targetType: string): string {
-  if (sourceType === 'query' && targetType !== 'llm') {
-    return 'User Queries can only connect to LLM nodes';
+  if (canConnect(sourceType, targetType)) {
+    return '';
   }
-
-  if (sourceType === 'llm' && targetType !== 'response' && targetType !== 'tool') {
-    return 'LLM nodes can only connect to Tool instances or Response nodes';
+  
+  const allowed = CONNECTION_RULES.allowed[sourceType as keyof typeof CONNECTION_RULES.allowed] || [];
+  
+  if (allowed.length === 0) {
+    return `${sourceType} nodes cannot have outgoing connections`;
   }
+  
+  return `${sourceType} nodes can only connect to: ${allowed.join(', ')}`;
+}
 
-  if (sourceType === 'tool' && targetType !== 'response') {
-    return 'Tool instances can only connect to Response nodes';
+/**
+ * Check if a connection already exists between two nodes
+ */
+export function connectionExists(
+  sourceId: string, 
+  targetId: string, 
+  edges: FlowEdge[]
+): boolean {
+  return edges.some(edge => 
+    edge.source === sourceId && edge.target === targetId
+  );
+}
+
+/**
+ * Validate LLM to Tool connection
+ * Tool must be in LLM's available tools list
+ */
+export function validateToolConnection(
+  llmNode: FlowNode,
+  toolNode: FlowNode,
+  toolDefinitions: MCPTool[]
+): { valid: boolean; error?: string } {
+  // Get tool definition ID from tool node
+  const toolDefinitionId = (toolNode.data as any)?.toolId;
+  if (!toolDefinitionId) {
+    return { valid: false, error: 'Tool instance has no tool definition' };
   }
-
-  if (sourceType === 'response') {
-    return 'Response nodes cannot have outgoing connections';
+  
+  // Check if tool is in LLM's available tools
+  const availableToolIds = (llmNode.data as any)?.availableToolIds || [];
+  if (!availableToolIds.includes(toolDefinitionId)) {
+    const toolDef = toolDefinitions.find(t => t.id === toolDefinitionId);
+    const toolName = toolDef?.displayName || toolDefinitionId;
+    return { 
+      valid: false, 
+      error: `Tool "${toolName}" is not in this LLM's available tools list. Add it in the LLM properties first.` 
+    };
   }
-
-  return 'This connection is not allowed';
+  
+  return { valid: true };
 }
 
 /**
