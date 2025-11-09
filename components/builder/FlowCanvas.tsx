@@ -154,6 +154,48 @@ export default function FlowCanvas() {
     });
   };
 
+  const onConnect = useCallback(
+    (params: Connection) => {
+      setEdges((eds) => addEdge({ ...params, type: 'smoothstep' }, eds));
+      toast({
+        title: 'Connection Added',
+        description: 'You can delete connections by selecting them and pressing Delete',
+      });
+    },
+    [setEdges, toast]
+  );
+
+  const handleEdgesChange = useCallback(
+    (changes: EdgeChange[]) => {
+      onEdgesChange(changes);
+    },
+    [onEdgesChange]
+  );
+
+  const handleKeyDown = useCallback(
+    (event: KeyboardEvent) => {
+      if (event.key === 'Delete' || event.key === 'Backspace') {
+        // Get selected edges and nodes
+        const selectedEdges = edges.filter((edge) => edge.selected);
+        if (selectedEdges.length > 0) {
+          setEdges((eds) => eds.filter((edge) => !edge.selected));
+          toast({
+            title: 'Connection Deleted',
+            description: `Deleted ${selectedEdges.length} connection(s)`,
+          });
+        }
+      }
+    },
+    [edges, setEdges, toast]
+  );
+
+  useEffect(() => {
+    document.addEventListener('keydown', handleKeyDown);
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [handleKeyDown]);
+
   if (!currentMCP) {
     return (
       <div className="flex items-center justify-center h-full text-muted-foreground">
