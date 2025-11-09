@@ -43,6 +43,27 @@ export default function Home() {
   ];
 
   const featuredMCPs = mockMCPs.slice(0, 3);
+  
+  // Random boat positions - right third of the wave section
+  const [boat1Pos, setBoat1Pos] = useState({ right: 25, bottom: 9 });
+  const [boat2Pos, setBoat2Pos] = useState({ right: 14, bottom: 4 });
+  const [boat3Pos, setBoat3Pos] = useState({ right: 7, bottom: 1 });
+
+  useEffect(() => {
+    // Randomize positions on mount (right third: 0-33% from right, bottom: 0-12%)
+    setBoat1Pos({
+      right: Math.floor(Math.random() * 20) + 15, // 15-35% from right
+      bottom: Math.floor(Math.random() * 8) + 4   // 4-12% from bottom
+    });
+    setBoat2Pos({
+      right: Math.floor(Math.random() * 20) + 8,  // 8-28% from right
+      bottom: Math.floor(Math.random() * 6) + 2   // 2-8% from bottom
+    });
+    setBoat3Pos({
+      right: Math.floor(Math.random() * 15) + 3,  // 3-18% from right
+      bottom: Math.floor(Math.random() * 5)       // 0-5% from bottom
+    });
+  }, []);
 
   return (
     <div className="min-h-screen flex flex-col">
