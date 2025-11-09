@@ -64,7 +64,8 @@ export default function BuilderV6Page() {
         {/* Left Sidebar - 280px */}
         <div className="w-[280px] border-r bg-background overflow-y-auto">
           {currentTab === 'tools' && <ToolsTab.Sidebar />}
-          {currentTab !== 'tools' && (
+          {currentTab === 'prompts' && <PromptsTab.Sidebar />}
+          {currentTab !== 'tools' && currentTab !== 'prompts' && (
             <div className="p-4">
               <div className="text-sm text-muted-foreground">
                 Sidebar for {currentTab}
@@ -76,7 +77,8 @@ export default function BuilderV6Page() {
         {/* Center Canvas - Flexible */}
         <div className="flex-1 bg-background overflow-y-auto">
           {currentTab === 'tools' && <ToolsTab.Canvas />}
-          {currentTab !== 'tools' && (
+          {currentTab === 'prompts' && <PromptsTab.Canvas />}
+          {currentTab !== 'tools' && currentTab !== 'prompts' && (
             <div className="p-6">
               <div className="text-2xl font-bold mb-2 capitalize">{currentTab}</div>
               <div className="text-muted-foreground">
