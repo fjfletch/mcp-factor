@@ -28,8 +28,12 @@ export function Navigation() {
     <nav className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container mx-auto flex h-16 items-center px-4">
         <Link href="/" className="flex items-center gap-2 mr-6">
-          <div className="h-8 w-8 rounded bg-primary" />
-          <span className="font-semibold text-lg">MCP Platform</span>
+          <img 
+            src="https://customer-assets.emergentagent.com/job_no-code-llm/artifacts/cua0n8i5_Screenshot%202025-11-08%20at%208.46.19%20PM.png" 
+            alt="Piraeus Logo" 
+            className="h-8 w-auto"
+          />
+          <span className="font-semibold text-lg">Piraeus</span>
         </Link>
 
         <div className="flex-1 max-w-md mx-4">
