@@ -97,6 +97,17 @@ export interface FlowNode {
     label: string;
     // For query nodes
     queryText?: string;
+    queryType?: string;
+    variables?: Array<{
+      name: string;
+      defaultValue?: string;
+      description?: string;
+    }>;
+    validation?: {
+      minLength?: number;
+      maxLength?: number;
+      requiredKeywords?: string[];
+    };
     // For LLM nodes
     llmId?: string;
     model?: string;
@@ -108,6 +119,20 @@ export interface FlowNode {
     toolId?: string;
     // For response nodes
     responseText?: string;
+    responseType?: 'dynamic' | 'template' | 'fixed' | 'json' | 'error';
+    formatting?: {
+      style: 'plain' | 'markdown' | 'html' | 'json';
+      includeMetadata: boolean;
+    };
+    variableMapping?: Array<{
+      templateVar: string;
+      source: 'llm' | 'tool' | 'custom';
+      path?: string;
+    }>;
+    errorHandling?: {
+      errorTemplate?: string;
+      fallback?: string;
+    };
   };
 }
 
