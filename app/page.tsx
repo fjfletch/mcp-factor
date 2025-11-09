@@ -134,7 +134,7 @@ export default function Home() {
       {/* Footer */}
       <footer className="py-8 px-4 border-t mt-16">
         <div className="container mx-auto max-w-6xl text-center text-muted-foreground">
-          <p>&copy; 2024 MCP Platform. All rights reserved.</p>
+          <p>&copy; 2024 Piraeus. All rights reserved.</p>
         </div>
       </footer>
     </div>
