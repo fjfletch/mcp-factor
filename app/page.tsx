@@ -71,22 +71,93 @@ export default function Home() {
           </svg>
         </div>
 
-        {/* Boat animation - moves with waves */}
-        <div className="absolute right-[5%] md:right-[8%]" style={{ 
-          bottom: 'calc(8% + 0px)',
+        {/* Large lead boat - bottom left */}
+        <div className="absolute left-[5%] md:left-[8%]" style={{ 
+          bottom: 'calc(6% + 0px)',
           animation: 'waveMotion 10s ease-in-out infinite'
         }}>
-          <svg width="60" height="60" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" className="md:w-20 md:h-20">
-            {/* Boat hull */}
-            <path d="M20,70 L80,70 L75,85 L25,85 Z" fill="#8B4513" stroke="#654321" strokeWidth="2"/>
-            {/* Boat deck */}
-            <rect x="30" y="60" width="40" height="10" fill="#A0522D" stroke="#654321" strokeWidth="1.5"/>
+          <svg width="100" height="100" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" className="md:w-32 md:h-32">
+            {/* Large boat hull */}
+            <path d="M15,65 L85,65 L80,85 L20,85 Z" fill="#654321" stroke="#4a3218" strokeWidth="2.5"/>
+            {/* Large boat deck */}
+            <rect x="25" y="53" width="50" height="12" fill="#8B4513" stroke="#654321" strokeWidth="2"/>
             {/* Mast */}
-            <line x1="50" y1="60" x2="50" y2="20" stroke="#654321" strokeWidth="3"/>
-            {/* Sail */}
-            <path d="M50,25 L70,40 L50,55 Z" fill="#FEDC97" stroke="#B5B682" strokeWidth="1.5" opacity="0.9"/>
+            <line x1="50" y1="53" x2="50" y2="15" stroke="#654321" strokeWidth="4"/>
+            {/* Large sail */}
+            <path d="M50,20 L75,37 L50,54 Z" fill="#FEDC97" stroke="#B5B682" strokeWidth="2" opacity="0.9"/>
             {/* Flag */}
-            <path d="M50,20 L60,23 L50,26 Z" fill="#033f63"/>
+            <path d="M50,15 L62,19 L50,23 Z" fill="#033f63"/>
+            {/* Cabin */}
+            <rect x="35" y="45" width="30" height="8" fill="#A0522D" stroke="#654321" strokeWidth="1.5"/>
+          </svg>
+        </div>
+
+        {/* Connecting lines - drawn with SVG for smooth animation */}
+        <svg className="absolute inset-0 w-full h-full pointer-events-none" style={{ zIndex: 5 }}>
+          {/* Line from large boat to boat 1 (top right) */}
+          <line className="tow-line tow-line-1" stroke="#654321" strokeWidth="2" strokeDasharray="5,5" opacity="0.6">
+            <animate attributeName="x1" dur="10s" repeatCount="indefinite" values="15%;15%;15%;15%" />
+            <animate attributeName="y1" dur="10s" repeatCount="indefinite" values="85%;88%;92%;88%" />
+            <animate attributeName="x2" dur="10s" repeatCount="indefinite" values="78%;78%;78%;78%" />
+            <animate attributeName="y2" dur="10s" repeatCount="indefinite" values="85%;88%;92%;88%" />
+          </line>
+          
+          {/* Line from large boat to boat 2 (middle right) */}
+          <line className="tow-line tow-line-2" stroke="#654321" strokeWidth="2" strokeDasharray="5,5" opacity="0.6">
+            <animate attributeName="x1" dur="10s" repeatCount="indefinite" values="15%;15%;15%;15%" />
+            <animate attributeName="y1" dur="10s" repeatCount="indefinite" values="85%;88%;92%;88%" />
+            <animate attributeName="x2" dur="10s" repeatCount="indefinite" values="82%;82%;82%;82%" />
+            <animate attributeName="y2" dur="10s" repeatCount="indefinite" values="91%;94%;98%;94%" />
+          </line>
+          
+          {/* Line from large boat to boat 3 (bottom right) */}
+          <line className="tow-line tow-line-3" stroke="#654321" strokeWidth="2" strokeDasharray="5,5" opacity="0.6">
+            <animate attributeName="x1" dur="10s" repeatCount="indefinite" values="15%;15%;15%;15%" />
+            <animate attributeName="y1" dur="10s" repeatCount="indefinite" values="85%;88%;92%;88%" />
+            <animate attributeName="x2" dur="10s" repeatCount="indefinite" values="86%;86%;86%;86%" />
+            <animate attributeName="y2" dur="10s" repeatCount="indefinite" values="97%;100%;104%;100%" />
+          </line>
+        </svg>
+
+        {/* Small boat 1 - top of triangle (right side, higher) */}
+        <div className="absolute right-[8%] md:right-[10%]" style={{ 
+          bottom: 'calc(12% + 0px)',
+          animation: 'waveMotion 10s ease-in-out infinite'
+        }}>
+          <svg width="50" height="50" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" className="md:w-16 md:h-16">
+            <path d="M20,70 L80,70 L75,85 L25,85 Z" fill="#8B4513" stroke="#654321" strokeWidth="2"/>
+            <rect x="30" y="60" width="40" height="10" fill="#A0522D" stroke="#654321" strokeWidth="1.5"/>
+            <line x1="50" y1="60" x2="50" y2="25" stroke="#654321" strokeWidth="3"/>
+            <path d="M50,30 L68,42 L50,54 Z" fill="#FEDC97" stroke="#B5B682" strokeWidth="1.5" opacity="0.9"/>
+            <path d="M50,25 L58,28 L50,31 Z" fill="#033f63"/>
+          </svg>
+        </div>
+
+        {/* Small boat 2 - middle of triangle */}
+        <div className="absolute right-[5%] md:right-[7%]" style={{ 
+          bottom: 'calc(6% + 0px)',
+          animation: 'waveMotion 10s ease-in-out infinite'
+        }}>
+          <svg width="50" height="50" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" className="md:w-16 md:h-16">
+            <path d="M20,70 L80,70 L75,85 L25,85 Z" fill="#8B4513" stroke="#654321" strokeWidth="2"/>
+            <rect x="30" y="60" width="40" height="10" fill="#A0522D" stroke="#654321" strokeWidth="1.5"/>
+            <line x1="50" y1="60" x2="50" y2="25" stroke="#654321" strokeWidth="3"/>
+            <path d="M50,30 L68,42 L50,54 Z" fill="#FEDC97" stroke="#B5B682" strokeWidth="1.5" opacity="0.9"/>
+            <path d="M50,25 L58,28 L50,31 Z" fill="#033f63"/>
+          </svg>
+        </div>
+
+        {/* Small boat 3 - bottom of triangle */}
+        <div className="absolute right-[2%] md:right-[4%]" style={{ 
+          bottom: 'calc(0% + 0px)',
+          animation: 'waveMotion 10s ease-in-out infinite'
+        }}>
+          <svg width="50" height="50" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" className="md:w-16 md:h-16">
+            <path d="M20,70 L80,70 L75,85 L25,85 Z" fill="#8B4513" stroke="#654321" strokeWidth="2"/>
+            <rect x="30" y="60" width="40" height="10" fill="#A0522D" stroke="#654321" strokeWidth="1.5"/>
+            <line x1="50" y1="60" x2="50" y2="25" stroke="#654321" strokeWidth="3"/>
+            <path d="M50,30 L68,42 L50,54 Z" fill="#FEDC97" stroke="#B5B682" strokeWidth="1.5" opacity="0.9"/>
+            <path d="M50,25 L58,28 L50,31 Z" fill="#033f63"/>
           </svg>
         </div>
 
