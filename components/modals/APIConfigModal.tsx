@@ -293,9 +293,9 @@ export default function APIConfigModal({
                 No routes yet. Click &apos;Add Route&apos; to add one.
               </div>
             ) : (
-              <div className="space-y-2 max-h-60 overflow-y-auto">
+              <div className="space-y-3 max-h-96 overflow-y-auto">
                 {routes.map((route) => (
-                  <div key={route.id} className="border rounded p-2 space-y-2">
+                  <div key={route.id} className="border rounded p-3 space-y-2 bg-muted/30">
                     <div className="grid grid-cols-12 gap-2">
                       <div className="col-span-3">
                         <Select
@@ -321,6 +321,7 @@ export default function APIConfigModal({
                             handleUpdateRoute(route.id, 'path', e.target.value)
                           }
                           placeholder="/api/resource"
+                          className="font-mono text-sm"
                         />
                       </div>
                       <div className="col-span-1">
@@ -340,6 +341,27 @@ export default function APIConfigModal({
                       }
                       placeholder="Description (optional)"
                     />
+                    
+                    {/* Show JSON Body field for methods that typically need it */}
+                    {['POST', 'PUT', 'PATCH', 'DELETE'].includes(route.method) && (
+                      <div className="space-y-1">
+                        <Label className="text-xs">
+                          Request Body (JSON format)
+                        </Label>
+                        <Textarea
+                          value={route.body || ''}
+                          onChange={(e) =>
+                            handleUpdateRoute(route.id, 'body', e.target.value)
+                          }
+                          placeholder={'{\n  "key": "value"\n}'}
+                          rows={4}
+                          className="font-mono text-xs"
+                        />
+                        <p className="text-xs text-muted-foreground">
+                          Optional: Example JSON body structure for this endpoint
+                        </p>
+                      </div>
+                    )}
                   </div>
                 ))}
               </div>
