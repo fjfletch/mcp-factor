@@ -173,13 +173,84 @@ export default function FlowCanvas() {
 
   const onConnect = useCallback(
     (params: Connection) => {
-      setEdges((eds) => addEdge({ ...params, type: 'smoothstep' }, eds));
+      if (!params.source || !params.target) {
+        return;
+      }
+
+      // Get source and target nodes
+      const sourceNode = nodes.find(n => n.id === params.source);
+      const targetNode = nodes.find(n => n.id === params.target);
+      
+      if (!sourceNode || !targetNode) {
+        toast({
+          title: "Error",
+          description: "Could not find source or target node",
+          variant: "destructive",
+        });
+        return;
+      }
+      
+      // Check for duplicate connection
+      if (connectionExists(params.source, params.target, edges)) {
+        toast({
+          title: "Duplicate Connection",
+          description: "A connection between these nodes already exists. Click the existing connection to edit it.",
+          variant: "destructive",
+        });
+        return;
+      }
+      
+      // Validate connection type
+      if (!canConnect(sourceNode.type, targetNode.type)) {
+        const errorMsg = getConnectionErrorMessage(sourceNode.type, targetNode.type);
+        toast({
+          title: "Invalid Connection",
+          description: errorMsg,
+          variant: "destructive",
+        });
+        return;
+      }
+      
+      // Special validation for LLM → Tool connections
+      if (sourceNode.type === 'llm' && targetNode.type === 'tool') {
+        const toolValidation = validateToolConnection(
+          sourceNode,
+          targetNode,
+          currentMCP?.tools || []
+        );
+        
+        if (!toolValidation.valid) {
+          toast({
+            title: "Tool Not Available",
+            description: toolValidation.error,
+            variant: "destructive",
+          });
+          return;
+        }
+      }
+      
+      // Create edge with solid line (default)
+      const newEdge = {
+        ...params,
+        type: 'smoothstep',
+        style: {
+          stroke: '#3b82f6',
+          strokeWidth: 2,
+          // Solid line - no strokeDasharray
+        },
+        data: {
+          condition: { type: 'always' as const },
+          priority: edges.filter(e => e.source === params.source).length,
+        },
+      };
+      
+      setEdges((eds) => addEdge(newEdge, eds));
       toast({
-        title: 'Connection Added',
-        description: 'You can delete connections by selecting them and pressing Delete',
+        title: 'Nodes Connected',
+        description: 'Connection created successfully. You can edit its properties by clicking on it.',
       });
     },
-    [setEdges, toast]
+    [nodes, edges, currentMCP, setEdges, toast]
   );
 
   const handleEdgesChange = useCallback(
