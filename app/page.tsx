@@ -165,39 +165,70 @@ export default function Home() {
           @keyframes waveMotion {
             0%, 100% {
               transform: translateY(0px) rotate(-3deg);
-              bottom: calc(8% + 0px);
             }
             25% {
               transform: translateY(-20px) rotate(2deg);
-              bottom: calc(8% + 20px);
             }
             50% {
               transform: translateY(-35px) rotate(-1deg);
-              bottom: calc(8% + 35px);
             }
             75% {
               transform: translateY(-20px) rotate(2deg);
-              bottom: calc(8% + 20px);
+            }
+          }
+          
+          @keyframes waveMotion1 {
+            0%, 100% {
+              transform: translateY(0px) rotate(-2deg);
+            }
+            30% {
+              transform: translateY(-25px) rotate(3deg);
+            }
+            60% {
+              transform: translateY(-30px) rotate(-2deg);
+            }
+            80% {
+              transform: translateY(-15px) rotate(1deg);
+            }
+          }
+          
+          @keyframes waveMotion2 {
+            0%, 100% {
+              transform: translateY(0px) rotate(2deg);
+            }
+            20% {
+              transform: translateY(-18px) rotate(-3deg);
+            }
+            55% {
+              transform: translateY(-40px) rotate(1deg);
+            }
+            85% {
+              transform: translateY(-22px) rotate(-1deg);
+            }
+          }
+          
+          @keyframes waveMotion3 {
+            0%, 100% {
+              transform: translateY(0px) rotate(-1deg);
+            }
+            35% {
+              transform: translateY(-28px) rotate(2deg);
+            }
+            65% {
+              transform: translateY(-38px) rotate(-3deg);
+            }
+            90% {
+              transform: translateY(-20px) rotate(1deg);
             }
           }
           
           @media (max-width: 768px) {
-            @keyframes waveMotion {
+            @keyframes waveMotion, @keyframes waveMotion1, @keyframes waveMotion2, @keyframes waveMotion3 {
               0%, 100% {
-                transform: translateY(0px) rotate(-3deg);
-                bottom: calc(5% + 0px);
-              }
-              25% {
-                transform: translateY(-15px) rotate(2deg);
-                bottom: calc(5% + 15px);
+                transform: translateY(0px) rotate(-2deg);
               }
               50% {
-                transform: translateY(-25px) rotate(-1deg);
-                bottom: calc(5% + 25px);
-              }
-              75% {
-                transform: translateY(-15px) rotate(2deg);
-                bottom: calc(5% + 15px);
+                transform: translateY(-20px) rotate(2deg);
               }
             }
           }
