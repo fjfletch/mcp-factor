@@ -45,7 +45,7 @@ export default function LoginPage() {
 
   const handleOAuthLogin = (provider: string) => {
     toast({
-      title: `${provider} Login",
+      title: `${provider} Login`,
       description: "OAuth integration coming soon..."
     });
   };
