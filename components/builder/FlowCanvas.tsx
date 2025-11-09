@@ -20,6 +20,7 @@ import ReactFlow, {
 import 'reactflow/dist/style.css';
 import { useMCPStore } from '@/store/mcpStore';
 import { useToast } from '@/components/ui/use-toast';
+import { canConnect, getConnectionErrorMessage, connectionExists, validateToolConnection } from '@/lib/flowValidation';
 import BlocksPalette from './BlocksPalette';
 
 export default function FlowCanvas() {
