@@ -74,7 +74,16 @@ export namespace ToolsTab {
           ))}
         </div>
 
-        {/* Modals will be added here */}
+        {/* Modals */}
+        <ToolModal
+          open={isModalOpen}
+          onOpenChange={setIsModalOpen}
+          toolId={selectedToolId}
+        />
+        <ToolsImportModal
+          open={isImportModalOpen}
+          onOpenChange={setIsImportModalOpen}
+        />
       </div>
     );
   }
