@@ -233,7 +233,7 @@ ${mockResponse.tool_calls
     // API node
     if (selectedNode.id.startsWith('api-')) {
       // Get API ID from node data instead of parsing node ID
-      const apiId = selectedNode.data?.apiId || selectedNode.id.replace('api-', '');
+      const apiId = (selectedNode.data as any)?.apiId || selectedNode.id.replace('api-', '');
       const api = currentMCP?.apis.find((a) => a.id === apiId);
       if (!api) {
         return (
