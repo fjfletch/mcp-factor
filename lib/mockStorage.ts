@@ -220,6 +220,10 @@ export function createNewMCP(): MCPIntegration {
       temperature: 0.7,
       maxTokens: 2000,
     },
+    flow: {
+      nodes: [],
+      edges: [],
+    },
   };
 }
 
