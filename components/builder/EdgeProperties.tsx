@@ -73,11 +73,11 @@ export default function EdgeProperties({ edge }: EdgePropertiesProps) {
   return (
     <Card>
       <CardHeader>
-        <CardTitle className=\"text-lg flex items-center gap-2\">
+        <CardTitle className="text-lg flex items-center gap-2">
           🔗 Connection Properties
         </CardTitle>
       </CardHeader>
-      <CardContent className=\"space-y-4\">
+      <CardContent className="space-y-4">
         {/* Connection Info */}
         <div className=\"bg-muted p-3 rounded-lg text-sm space-y-2\">
           <div className=\"flex items-center justify-between\">
