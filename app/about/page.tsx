@@ -96,9 +96,18 @@ export default function About() {
           className="container mx-auto max-w-5xl text-center"
         >
           <div className="backdrop-blur-lg bg-white/15 border border-white/25 rounded-3xl p-12 shadow-2xl">
-            <h1 className="text-6xl md:text-7xl font-bold mb-6" style={{ color: '#033F63' }}>
-              About Piraeus
-            </h1>
+            <div className="flex items-start gap-8 mb-6">
+              <img 
+                src="/piraeus-logo.png" 
+                alt="Piraeus Logo" 
+                className="w-24 h-24 flex-shrink-0"
+              />
+              <div className="flex-1">
+                <h1 className="text-6xl md:text-7xl font-bold mb-6" style={{ color: '#033F63' }}>
+                  About Piraeus
+                </h1>
+              </div>
+            </div>
             <p className="text-xl md:text-2xl max-w-3xl mx-auto" style={{ color: '#28666E' }}>
               Piraeus is the historic port city of Athens, known since ancient Greece as a major hub of trade, connection, and exchange where countless routes, goods, and ideas converged. Here, we embody the same spirit of connectivity: a dynamic port where APIs, LLMs, and users meet, exchange data, and build powerful integrations across a vast digital network.
             </p>
