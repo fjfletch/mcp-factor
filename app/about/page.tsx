@@ -28,6 +28,9 @@ const ParticleBackground = dynamic(
 
 export default function About() {
   const [scrollProgress, setScrollProgress] = useState(0);
+  const [typedTextWithout, setTypedTextWithout] = useState("");
+  const [typedTextWith, setTypedTextWith] = useState("");
+  const [startTyping, setStartTyping] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -42,6 +45,60 @@ export default function About() {
     handleScroll(); // Initialize on mount
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  const textWithoutMCP = "I'm sorry for the confusion, but as an AI, I currently don't have the ability to provide real-time flight information or book flights. It's recommended to check major travel and airline websites like Expedia, Kayak, or directly from airline websites for detailed and accurate flight information and booking.";
+  
+  const textWithMCP = `Here are some flight options from Chicago (ORD) to Los Angeles (LAX) on November 10, 2025:
+
+1. Frontier Flight F9 1596 and F9 4315: Price $171
+   Departure: 05:05 from Chicago ORD, Arrival: 12:25 in Los Angeles LAX
+   Duration: 9h 20m Including layover in Atlanta ATL (2h 19m)
+
+2. Frontier Flight F9 2445: Price $274
+   Departure: 06:30 from Chicago ORD, Arrival: 08:56 in Los Angeles LAX
+   Duration: 4h 26m, Direct flight
+
+3. United Flight UA 2396: Price $437
+   Departure: 13:00 from Chicago ORD, Arrival: 15:30 in Los Angeles LAX
+   Duration: 4h 30m, Direct flight
+
+4. American Airlines AA 369: Price $437
+   Departure: 13:49 from Chicago ORD, Arrival: 16:21 in Los Angeles LAX
+   Duration: 4h 32m, Direct flight
+
+For more options and to book flights, you may view here: https://www.google.com/travel/flights
+
+Please note, these prices are higher than average for this route.`;
+
+  useEffect(() => {
+    if (!startTyping) return;
+
+    let indexWithout = 0;
+    let indexWith = 0;
+
+    const intervalWithout = setInterval(() => {
+      if (indexWithout < textWithoutMCP.length) {
+        setTypedTextWithout(textWithoutMCP.slice(0, indexWithout + 1));
+        indexWithout++;
+      } else {
+        clearInterval(intervalWithout);
+      }
+    }, 20);
+
+    const intervalWith = setInterval(() => {
+      if (indexWith < textWithMCP.length) {
+        setTypedTextWith(textWithMCP.slice(0, indexWith + 1));
+        indexWith++;
+      } else {
+        clearInterval(intervalWith);
+      }
+    }, 15);
+
+    return () => {
+      clearInterval(intervalWithout);
+      clearInterval(intervalWith);
+    };
+  }, [startTyping, textWithoutMCP, textWithMCP]);
 
   const faqs = [
     {
