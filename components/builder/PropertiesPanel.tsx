@@ -25,6 +25,20 @@ export default function PropertiesPanel() {
   const [isEditingTool, setIsEditingTool] = useState(false);
   const [editingAPIConfig, setEditingAPIConfig] = useState<any>(null);
   const [editingToolConfig, setEditingToolConfig] = useState<any>(null);
+  
+  // LLM configuration state
+  const [model, setModel] = useState(currentMCP?.configuration.model || 'gpt-3.5-turbo');
+  const [temperature, setTemperature] = useState(currentMCP?.configuration.temperature || 0.7);
+  const [maxTokens, setMaxTokens] = useState(currentMCP?.configuration.maxTokens || 2000);
+
+  // Update local state when currentMCP changes
+  useEffect(() => {
+    if (currentMCP) {
+      setModel(currentMCP.configuration.model);
+      setTemperature(currentMCP.configuration.temperature);
+      setMaxTokens(currentMCP.configuration.maxTokens);
+    }
+  }, [currentMCP]);
 
   const runTest = async () => {
     if (!testQuery.trim()) return;
