@@ -119,6 +119,60 @@ export default function Home() {
         </motion.div>
       </section>
 
+      {/* Features Section */}
+      <section className="min-h-screen flex items-center justify-center px-4 py-20">
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          transition={{ duration: 0.8 }}
+          viewport={{ once: true }}
+          className="container mx-auto max-w-6xl"
+        >
+          <div className="text-center mb-16 backdrop-blur-lg bg-white/15 border border-white/25 rounded-3xl p-8 shadow-xl">
+            <h2 className="text-5xl font-bold mb-4" style={{ color: '#033F63' }}>
+              Powerful Features
+            </h2>
+            <p className="text-xl" style={{ color: '#28666E' }}>
+              Everything you need to build AI integrations
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {features.map((feature, index) => {
+              const Icon = feature.icon;
+              return (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ delay: index * 0.1, duration: 0.5 }}
+                  viewport={{ once: true }}
+                >
+                  <Card className="h-full backdrop-blur-xl bg-white/20 border-2 border-white/30 hover:shadow-2xl hover:bg-white/30 transition-all duration-300" style={{ borderColor: 'rgba(181, 182, 130, 0.3)' }}>
+                    <CardHeader>
+                      <div 
+                        className="w-16 h-16 rounded-2xl flex items-center justify-center mb-4 mx-auto backdrop-blur-sm"
+                        style={{ backgroundColor: 'rgba(254, 220, 151, 0.5)', border: '2px solid rgba(254, 220, 151, 0.3)' }}
+                      >
+                        <Icon className="w-8 h-8" style={{ color: '#033F63' }} />
+                      </div>
+                      <CardTitle className="text-center text-xl" style={{ color: '#033F63' }}>
+                        {feature.title}
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <CardDescription className="text-center" style={{ color: '#28666E' }}>
+                        {feature.description}
+                      </CardDescription>
+                    </CardContent>
+                  </Card>
+                </motion.div>
+              );
+            })}
+          </div>
+        </motion.div>
+      </section>
+
       {/* Tech Stack Section */}
       <section className="min-h-screen flex items-center justify-center px-4">
         <motion.div
@@ -173,60 +227,6 @@ export default function Home() {
               </div>
             </CardContent>
           </Card>
-        </motion.div>
-      </section>
-
-      {/* Features Section */}
-      <section className="min-h-screen flex items-center justify-center px-4 py-20">
-        <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          transition={{ duration: 0.8 }}
-          viewport={{ once: true }}
-          className="container mx-auto max-w-6xl"
-        >
-          <div className="text-center mb-16 backdrop-blur-lg bg-white/15 border border-white/25 rounded-3xl p-8 shadow-xl">
-            <h2 className="text-5xl font-bold mb-4" style={{ color: '#033F63' }}>
-              Powerful Features
-            </h2>
-            <p className="text-xl" style={{ color: '#28666E' }}>
-              Everything you need to build AI integrations
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {features.map((feature, index) => {
-              const Icon = feature.icon;
-              return (
-                <motion.div
-                  key={index}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ delay: index * 0.1, duration: 0.5 }}
-                  viewport={{ once: true }}
-                >
-                  <Card className="h-full backdrop-blur-xl bg-white/20 border-2 border-white/30 hover:shadow-2xl hover:bg-white/30 transition-all duration-300" style={{ borderColor: 'rgba(181, 182, 130, 0.3)' }}>
-                    <CardHeader>
-                      <div 
-                        className="w-16 h-16 rounded-2xl flex items-center justify-center mb-4 mx-auto backdrop-blur-sm"
-                        style={{ backgroundColor: 'rgba(254, 220, 151, 0.5)', border: '2px solid rgba(254, 220, 151, 0.3)' }}
-                      >
-                        <Icon className="w-8 h-8" style={{ color: '#033F63' }} />
-                      </div>
-                      <CardTitle className="text-center text-xl" style={{ color: '#033F63' }}>
-                        {feature.title}
-                      </CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                      <CardDescription className="text-center" style={{ color: '#28666E' }}>
-                        {feature.description}
-                      </CardDescription>
-                    </CardContent>
-                  </Card>
-                </motion.div>
-              );
-            })}
-          </div>
         </motion.div>
       </section>
 
