@@ -3,32 +3,21 @@ import { FlowConfiguration, FlowNode, FlowEdge, MCPTool } from '@/types/mcp';
 /**
  * Connection rules: defines which node types can connect to which
  */
-export const CONNECTION_RULES = {
+export const CONNECTION_RULES: Record<string, string[]> = {
   // Allowed connections: source type -> array of allowed target types
-  allowed: {
-    'query': ['llm', 'response'], // Query can connect to LLM or directly to Response
-    'llm': ['response', 'tool'],  // LLM can connect to Response or Tool
-    'tool': ['response'],          // Tool can only connect to Response
-    'response': []                 // Response has no outgoing connections (terminal)
-  },
-  
-  // Prohibited connections (for documentation)
-  prohibited: {
-    'query': ['query', 'tool'],
-    'llm': ['query', 'llm'],
-    'tool': ['query', 'llm', 'tool'],
-    'response': ['query', 'llm', 'tool', 'response']
-  }
+  'query': ['llm', 'response'], // Query can connect to LLM or directly to Response
+  'llm': ['response', 'tool'],  // LLM can connect to Response or Tool
+  'tool': ['response'],          // Tool can only connect to Response
+  'response': []                 // Response has no outgoing connections (terminal)
 };
 
 /**
  * Check if a connection between two node types is allowed
  */
 export function canConnect(sourceType: string, targetType: string): boolean {
-  const allowedKey = sourceType as keyof typeof CONNECTION_RULES.allowed;
-  const allowedTargets = CONNECTION_RULES.allowed[allowedKey];
+  const allowedTargets = CONNECTION_RULES[sourceType];
   if (!allowedTargets) return false;
-  return allowedTargets.includes(targetType as any);
+  return allowedTargets.includes(targetType);
 }
 
 /**
