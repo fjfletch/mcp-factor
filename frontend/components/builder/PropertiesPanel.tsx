@@ -321,7 +321,7 @@ ${mockResponse.tool_calls
 
     // Prompt node
     if (selectedNode.id.startsWith('prompt-')) {
-      const promptId = selectedNode.data?.promptId;
+      const promptId = (selectedNode.data as any)?.promptId;
       const prompt = currentMCP?.prompts.find((p) => p.id === promptId);
       
       if (!prompt) {
