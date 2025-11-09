@@ -145,7 +145,7 @@ ${mockResponse.tool_calls
     // Tool node
     if (selectedNode.id.startsWith('tool-')) {
       // Get tool ID from node data instead of parsing node ID
-      const toolId = selectedNode.data?.toolId;
+      const toolId = (selectedNode.data as any)?.toolId;
       const tool = currentMCP?.tools.find((t) => t.id === toolId);
       if (!tool || !toolId) {
         return (
