@@ -38,6 +38,7 @@ export interface APIRoute {
   method: 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH';
   path: string;
   description: string;
+  body?: string; // JSON body for POST, PUT, PATCH, DELETE requests
 }
 
 export interface MCPTool {
