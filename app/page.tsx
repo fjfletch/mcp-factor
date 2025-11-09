@@ -168,7 +168,7 @@ export default function Home() {
           <h1 className="text-5xl md:text-6xl font-bold mb-6 drop-shadow-lg" style={{ color: '#033F63' }}>
             Connect Any API to Any LLM
           </h1>
-          <p className="text-xl text-white/90 mb-8 max-w-3xl mx-auto drop-shadow">
+          <p className="text-xl mb-8 max-w-3xl mx-auto drop-shadow" style={{ color: '#033F63' }}>
             Build powerful AI integrations visually. No code required. Piraeus 
             makes it easy to expose APIs as tools that LLMs can use.
           </p>
