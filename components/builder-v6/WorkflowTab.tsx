@@ -22,16 +22,6 @@ export namespace WorkflowTab {
     const [mcpsFolderOpen, setMcpsFolderOpen] = useState(true);
     const [responsesFolderOpen, setResponsesFolderOpen] = useState(true);
 
-    const handleDragStart = (e: React.DragEvent, type: 'mcp' | 'response', id: number) => {
-      e.dataTransfer.effectAllowed = 'copy';
-      e.dataTransfer.setData('type', type === 'mcp' ? 'saved-mcp' : 'saved-response');
-      if (type === 'mcp') {
-        e.dataTransfer.setData('mcpConfigId', id.toString());
-      } else {
-        e.dataTransfer.setData('responseConfigId', id.toString());
-      }
-    };
-
     return (
       <div className="h-full flex flex-col p-4 space-y-4">
         <div>
@@ -61,15 +51,7 @@ export namespace WorkflowTab {
                 </div>
               ) : (
                 savedMCPConfigs.map((config) => (
-                  <div
-                    key={config.id}
-                    draggable
-                    onDragStart={(e) => handleDragStart(e, 'mcp', config.id)}
-                    className="flex items-center gap-2 p-2 bg-card border rounded cursor-move hover:bg-accent transition-colors text-sm"
-                  >
-                    <Bot className="h-3 w-3 text-muted-foreground flex-shrink-0" />
-                    <span className="truncate">{config.name}</span>
-                  </div>
+                  <DraggableMCPItem key={config.id} config={config} />
                 ))
               )}
             </div>
@@ -96,15 +78,7 @@ export namespace WorkflowTab {
                 </div>
               ) : (
                 savedResponseConfigs.map((config) => (
-                  <div
-                    key={config.id}
-                    draggable
-                    onDragStart={(e) => handleDragStart(e, 'response', config.id)}
-                    className="flex items-center gap-2 p-2 bg-card border rounded cursor-move hover:bg-accent transition-colors text-sm"
-                  >
-                    <Send className="h-3 w-3 text-muted-foreground flex-shrink-0" />
-                    <span className="truncate">{config.name}</span>
-                  </div>
+                  <DraggableResponseItem key={config.id} config={config} />
                 ))
               )}
             </div>
