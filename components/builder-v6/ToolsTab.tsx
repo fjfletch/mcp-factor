@@ -6,6 +6,8 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Wrench, Plus, Upload } from 'lucide-react';
+import { ToolModal } from './ToolModal';
+import { ToolsImportModal } from './ToolsImportModal';
 
 export namespace ToolsTab {
   export function Sidebar() {
