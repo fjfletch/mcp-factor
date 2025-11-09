@@ -210,19 +210,26 @@ export default function FlowCanvas() {
         nodes={nodes}
         edges={edges}
         onNodesChange={onNodesChange}
-        onEdgesChange={onEdgesChange}
+        onEdgesChange={handleEdgesChange}
         onNodeClick={handleNodeClick}
+        onConnect={onConnect}
         fitView
+        deleteKeyCode="Delete"
+        multiSelectionKeyCode="Shift"
       >
         <Controls />
         <MiniMap />
         <Background variant={BackgroundVariant.Dots} />
-        <Panel position="top-left" className="bg-background/90 p-3 rounded-lg border">
+        <Panel position="top-left" className="bg-background/90 p-3 rounded-lg border shadow-lg">
           <div className="text-sm">
-            <p className="font-semibold mb-1">💡 Flow Auto-Generated</p>
-            <p className="text-xs text-muted-foreground">
-              Add APIs & Tools in sidebar to see them here
-            </p>
+            <p className="font-semibold mb-2">💡 Interactive Flow Canvas</p>
+            <div className="text-xs text-muted-foreground space-y-1">
+              <p>• Click nodes to edit in Properties panel</p>
+              <p>• Drag nodes to reposition</p>
+              <p>• Click and drag between nodes to connect</p>
+              <p>• Select connections and press Delete to remove</p>
+              <p>• Add APIs & Tools in sidebar</p>
+            </div>
           </div>
         </Panel>
       </ReactFlow>
